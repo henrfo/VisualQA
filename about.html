@@ -51,7 +51,6 @@ permalink: /about/
   {%- endfor -%}
   {%- assign contributors = contributors | sort_natural -%}
 
-  {%- if contributors.size > 0 -%}
   <p class="about-gap"><strong>Contributors:</strong></p>
   <div class="contributor-wall">
     {%- for name in contributors -%}
@@ -75,7 +74,6 @@ permalink: /about/
       {%- endif -%}
     {%- endfor -%}
   </div>
-  {%- endif -%}
 
   <p>Built at Neurohackademy 2026. Open to everyone.</p>
 </div>
