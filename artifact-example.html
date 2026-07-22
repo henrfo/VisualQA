@@ -15,11 +15,11 @@ title: Artifact example
   <figure class="qc-figure">
     <div class="qc-pair">
       <div>
-        <img src="{{ '/assets/images/motion_t1_good.png' | relative_url }}" alt="Sagittal, coronal and axial T1 slices with sharp gray/white boundaries and no ringing.">
+        <img src="/VisualQA/assets/images/motion_t1_good.png" alt="Sagittal, coronal and axial T1 slices with sharp gray/white boundaries and no ringing.">
         <span class="qc-label qc-pass">Acceptable</span>
       </div>
       <div>
-        <img src="{{ '/assets/images/motion_t1_bad.png' | relative_url }}" alt="The same three T1 views showing concentric ringing radiating from the skull and a blurred gray/white boundary.">
+        <img src="/VisualQA/assets/images/motion_t1_bad.png" alt="The same three T1 views showing concentric ringing radiating from the skull and a blurred gray/white boundary.">
         <span class="qc-label qc-fail">Motion-corrupted</span>
       </div>
     </div>
@@ -31,8 +31,8 @@ title: Artifact example
 
   <figure class="qc-figure">
     <video
-      src="{{ '/assets/videos/motion_bold_compare.mp4' | relative_url }}"
-      poster="{{ '/assets/images/motion_t1_bad.png' | relative_url }}"
+      src="/VisualQA/assets/videos/motion_bold_compare.mp4"
+      poster="/VisualQA/assets/images/motion_t1_bad.png"
       autoplay muted loop playsinline
       preload="metadata"
       aria-label="Two BOLD time series playing side by side. On the left the brain stays in a fixed position across volumes. On the right it visibly translates and rotates between volumes."
