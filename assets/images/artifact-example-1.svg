@@ -1,0 +1,14 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#f5f9ff"/>
+  <rect x="160" y="120" width="880" height="560" rx="24" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
+  <ellipse cx="600" cy="410" rx="260" ry="220" fill="#e2f0ff"/>
+  <path d="M360 380c40-80 120-120 180-120 70 0 130 40 160 90 18 28 28 62 28 94 0 36-10 72-30 106-28 47-80 82-140 82-90 0-168-56-192-144-14-50-12-96 0-140z" fill="#c8e3ff"/>
+  <path d="M470 360c36-44 76-74 118-74 46 0 85 25 105 66 26 53 16 118-18 163-24 31-56 48-96 48-58 0-102-40-118-94-10-33-9-66 9-109z" fill="#8bc6ff"/>
+  <path d="M390 475c46 64 122 95 200 95 94 0 170-41 228-112" stroke="#4f46e5" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <path d="M430 318c82-26 163-28 230 2" stroke="#ff7a59" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <path d="M455 442c70 44 150 42 220 0" stroke="#ff7a59" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <path d="M390 400c65 30 123 42 188 38" stroke="#1d4ed8" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <path d="M390 520c72 38 153 42 234 10" stroke="#1d4ed8" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <rect x="180" y="140" width="180" height="72" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="210" y="182" font-family="Arial, sans-serif" font-size="34" fill="#0f172a">MRI</text>
+</svg>
