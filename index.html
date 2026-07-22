@@ -50,45 +50,53 @@ title: VisualQA
 
 <style>
   .river {
-    margin-top: 48px;
+    margin: 64px auto 0;
+    max-width: 640px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 0;
-    max-width: 720px;
   }
   .river-level {
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+    flex-direction: column;
     align-items: center;
-    padding: 14px 0;
+    gap: 8px;
+    padding: 16px 0;
     position: relative;
   }
-  /* the "flow" — a hairline connector between levels */
+  /* the "flow" — a short centered hairline connecting each level to the next */
   .river-level + .river-level::before {
     content: "";
     position: absolute;
-    top: -14px;
-    left: 10px;
+    top: 0;
+    left: 50%;
     width: 1px;
-    height: 14px;
+    height: 16px;
     background: var(--hairline);
   }
-  .river-level .level-label {
+  .level-label {
     font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: var(--muted);
-    margin-right: 8px;
-    min-width: 92px;
+  }
+  .level-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
   }
   .leaf-panel {
-    margin-top: 24px;
-    max-width: 720px;
-    padding: 20px;
+    margin: 28px auto 0;
+    max-width: 560px;
+    padding: 22px 24px;
     border: 1px solid var(--hairline);
     border-radius: 2px;
+    text-align: center;
   }
-  .leaf-path { font-size: 13px; color: var(--text); margin: 0 0 8px; }
-  .leaf-note { font-size: 13px; color: var(--muted); margin: 0; }
+  .leaf-path { font-size: 14px; color: var(--text); margin: 0 0 10px; }
+  .leaf-note { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6; }
 </style>
 
 <script>
@@ -129,13 +137,16 @@ title: VisualQA
       label.textContent = LEVEL_LABELS[i] || 'More';
       level.appendChild(label);
 
+      const pills = document.createElement('div');
+      pills.className = 'level-pills';
       for (const key of Object.keys(options)) {
         const btn = document.createElement('button');
         btn.className = 'pill' + (path[i] === key ? ' selected' : '');
         btn.textContent = key;
         btn.addEventListener('click', () => choose(i, key));
-        level.appendChild(btn);
+        pills.appendChild(btn);
       }
+      level.appendChild(pills);
       riverEl.appendChild(level);
     }
 
