@@ -1,123 +1,18 @@
 ---
 layout: default
 title: Artifact example
+permalink: /artifact-example/
 ---
 
-<section class="artifact-identification">
-  <h2>Head motion</h2>
-
-  <p class="one-liner">
-    Blurring and concentric ringing on structural scans, most visible at
-    high-contrast boundaries; on functional scans, the brain visibly shifts
-    position between volumes.
-  </p>
-
-  <figure class="qc-figure">
-    <div class="qc-pair">
-      <div>
-        <img src="/VisualQA/assets/images/motion_t1_good.png" alt="Sagittal, coronal and axial T1 slices with sharp gray/white boundaries and no ringing.">
-        <span class="qc-label qc-pass">Acceptable</span>
-      </div>
-      <div>
-        <img src="/VisualQA/assets/images/motion_t1_bad.png" alt="The same three T1 views showing concentric ringing radiating from the skull and a blurred gray/white boundary.">
-        <span class="qc-label qc-fail">Motion-corrupted</span>
-      </div>
-    </div>
-    <figcaption>
-      T1. Note the ripple pattern radiating outward from the skull on the right,
-      and the loss of definition at the gray/white junction.
-      Data from the MiND study.<sup><a href="#ref-mind">1</a></sup>
-    </figcaption>
-  </figure>
-
-  <figure class="qc-figure">
-    <video
-      src="/VisualQA/assets/videos/motion_bold_compare.mp4"
-      poster="/VisualQA/assets/images/motion_t1_bad.png"
-      autoplay muted loop playsinline
-      preload="metadata"
-      aria-label="Two BOLD time series playing side by side. On the left the brain stays in a fixed position across volumes. On the right it visibly translates and rotates between volumes."
-      width="960"></video>
-    <div class="qc-pair-labels">
-      <span class="qc-label qc-pass">Acceptable</span>
-      <span class="qc-label qc-fail">Motion-corrupted</span>
-    </div>
-    <figcaption>
-      BOLD, 180 volumes, played at 30&nbsp;fps. Watch the top edge of the brain
-      against the fixed crosshair.
-      Data from the MiND study.<sup><a href="#ref-mind">1</a></sup>
-      <button type="button" class="qc-video-toggle" aria-pressed="false">Pause</button>
-    </figcaption>
-  </figure>
-
-  <aside class="qc-decision-box">
-    <h3>The call, in short</h3>
-    <ul>
-      <li>Ringing confined to skull and scalp, gray/white boundary intact &rarr; usable for volumetrics; re-inspect before surface-based analysis.</li>
-      <li>Ringing reaching cortex, or blurred gray/white boundary &rarr; run the segmentation and judge the surfaces, not the raw image.</li>
-      <li>Functional: check framewise displacement before eyeballing. Decide against your pre-registered threshold, not against these examples.</li>
-      <li>Participant still in the scanner? Rescan. Nothing below beats that.</li>
-    </ul>
-  </aside>
-
-  <section class="references" aria-label="References">
-    <h3>References</h3>
-    <ol>
-      <li id="ref-mind">
-        Gagnon, H., Simmonite, M., Cassady, K., Chamberlain, J., Freiburger, E.,
-        Lalwani, P., Kelley, S., Foerster, B., Park, D. C., Petrou, M.,
-        Seidler, R. D., Taylor, S. F., Weissman, D. H., &amp; Polk, T. A. (2019).
-        Michigan Neural Distinctiveness (MiND) study protocol: Investigating the
-        scope, causes, and consequences of age-related neural dedifferentiation.
-        <em>BMC Neurology, 19</em>(1), 61.
-        <a href="https://doi.org/10.1186/s12883-019-1294-6">https://doi.org/10.1186/s12883-019-1294-6</a>
-      </li>
-    </ol>
-  </section>
-</section>
-
-<style>
-  .qc-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .qc-pair img, .qc-figure video { width: 100%; height: auto; display: block; background: #000; }
-  .qc-pair-labels { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .qc-label { display: inline-block; font-size: 0.8rem; padding: 0.15rem 0.5rem; margin-top: 0.35rem; }
-  .qc-pass { background: #e1f5ee; color: #085041; }
-  .qc-fail { background: #fceded; color: #791f1f; }
-  .qc-figure figcaption { font-size: 0.9rem; color: #5f5e5a; margin-top: 0.5rem; }
-  .qc-decision-box { border-left: 3px solid #888780; padding: 0.75rem 1rem; background: #f1efe8; }
-  .references { margin-top: 2.5rem; font-size: 0.9rem; }
-  .references ol { padding-left: 1.25rem; }
-  .references li { margin-bottom: 0.5rem; line-height: 1.5; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .qc-figure video { /* paused by script below; poster remains visible */ }
-  }
-  @media (max-width: 640px) {
-    .qc-pair, .qc-pair-labels { grid-template-columns: 1fr; }
-  }
-</style>
-
-<script>
-  document.querySelectorAll('.qc-figure').forEach(function (fig) {
-    var video = fig.querySelector('video');
-    var button = fig.querySelector('.qc-video-toggle');
-    if (!video) return;
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      video.autoplay = false;
-      video.pause();
-    }
-
-    if (!button) return;
-    var sync = function () {
-      var paused = video.paused;
-      button.textContent = paused ? 'Play' : 'Pause';
-      button.setAttribute('aria-pressed', String(paused));
-    };
-    button.addEventListener('click', function () {
-      if (video.paused) { video.play(); } else { video.pause(); }
-      sync();
-    });
-    sync();
-  });
-</script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content="0; url=/VisualQA/artifacts/mri/" />
+    <title>Artifact example</title>
+  </head>
+  <body>
+    <p>Redirecting to the artifact example page…</p>
+  </body>
+</html>
