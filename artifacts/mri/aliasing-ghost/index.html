@@ -1,0 +1,118 @@
+---
+layout: default
+title: Aliasing ghost
+---
+
+<section class="artifact-identification">
+  <h2>Aliasing ghost (N/2 ghost)</h2>
+
+  <p class="one-liner">
+    A faint, displaced copy of the brain shifted by half the field of view along
+    the phase-encode direction. On EPI (functional and diffusion) it appears as a
+    shadow of the head offset by half the image, often visible in the background
+    but sometimes falling across brain tissue itself.
+  </p>
+
+  <figure class="qc-figure">
+    <img src="/VisualQA/assets/images/ghost_afni_fig2.png" alt="Axial EPI slices from two subjects. In the first, a strong ghost of the head is superimposed across the central brain region. In the second, a fainter ghost is visible along with ringing in the inferior slices.">
+    <figcaption>
+      Two EPI datasets with ghosting of differing severity. The upper case shows
+      a strong ghost running through the central brain region; the lower shows a
+      milder ghost accompanied by ringing in the inferior slices. Colour bands
+      mark the reviewers' calls: red for exclude, yellow for uncertain.
+      Panels&nbsp;B and&nbsp;C of Figure&nbsp;2 from
+      <a href="https://doi.org/10.3389/fnins.2022.1073800">Reynolds et&nbsp;al. (2023)</a>,
+      reproduced under CC&nbsp;BY&nbsp;4.0.<sup><a href="#ref-reynolds">1</a></sup>
+    </figcaption>
+  </figure>
+
+  <aside class="qc-decision-box">
+    <h3>The call, in short</h3>
+    <ul>
+      <li>Ghost falling across the central brain &rarr; the affected signal is non-physiological. Exclude.</li>
+      <li>Faint ghost confined to background, not overlapping tissue &rarr; note it, check whether it worsens across the run, and check whether your ROI is near the affected region.</li>
+      <li>Re-window before deciding. Narrowing the top of the display window brings faint out-of-brain signal into view; a ghost invisible at the default window can still bias intensity-based metrics.</li>
+      <li>Ghosting on every scan from one session, site or coil &rarr; suspect hardware or reconstruction rather than the participant, and raise it with the scanner physicist.</li>
+      <li>Check the background, not just the brain. Patterns outside the head are where ghosts, spikes and scanner problems announce themselves.</li>
+    </ul>
+  </aside>
+
+  <h3>Severity ladder</h3>
+
+  <table class="severity">
+    <thead>
+      <tr><th>Appearance</th><th>Call</th><th>Reasoning</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>No visible ghost at a narrowed display window</td>
+        <td><span class="qc-label qc-pass">Include</span></td>
+        <td>Nothing to act on.</td>
+      </tr>
+      <tr>
+        <td>Faint ghost in background only, no overlap with tissue</td>
+        <td><span class="qc-label qc-warn">Uncertain</span></td>
+        <td>May still shift intensity-based metrics. Check GSR and whether it worsens across the run.</td>
+      </tr>
+      <tr>
+        <td>Moderate ghost, possibly with other artifacts present</td>
+        <td><span class="qc-label qc-warn">Uncertain</span></td>
+        <td>Degree of signal effect is hard to judge visually. Follow up with interactive inspection before deciding.</td>
+      </tr>
+      <tr>
+        <td>Strong ghost crossing central brain regions</td>
+        <td><span class="qc-label qc-fail">Exclude</span></td>
+        <td>Affected voxels carry summed signal from two locations; correlation patterns there are non-physiological.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Metrics</h3>
+
+  <p>
+    MRIQC reports <strong>Ghost-to-Signal Ratio (GSR)</strong>, which estimates
+    mean signal in the regions prone to N/2 ghosting along the phase-encode axis,
+    relative to mean signal inside the brain mask. Lower is better. GSR makes
+    ghosting sortable across a dataset, so it is an efficient way to triage which
+    scans to inspect visually &mdash; but it is a summary number and does not tell
+    you <em>where</em> the ghost lands, which is the part that determines whether
+    the scan is usable.
+  </p>
+
+  <section class="references" aria-label="References">
+    <h3>References</h3>
+    <ol>
+      <li id="ref-reynolds">
+        Reynolds, R. C., Taylor, P. A., &amp; Glen, D. R. (2023). Quality control
+        practices in FMRI analysis: Philosophy, methods and examples using AFNI.
+        <em>Frontiers in Neuroscience, 16</em>, 1073800.
+        <a href="https://doi.org/10.3389/fnins.2022.1073800">https://doi.org/10.3389/fnins.2022.1073800</a>
+        Figure&nbsp;2 (panels B and C), cropped and reproduced under the
+        <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+      </li>
+    </ol>
+  </section>
+</section>
+
+<style>
+  .qc-figure { margin: 1.5rem 0; }
+  .qc-figure > img { width: 100%; height: auto; display: block; }
+  .qc-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .qc-pair img, .qc-figure video { width: 100%; height: auto; display: block; background: #000; }
+  .qc-pair-labels { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .qc-label { display: inline-block; font-size: 0.8rem; padding: 0.15rem 0.5rem; }
+  .qc-pass { background: #e1f5ee; color: #085041; }
+  .qc-warn { background: #fdf4e3; color: #6b4c14; }
+  .qc-fail { background: #fceded; color: #791f1f; }
+  .qc-figure figcaption { font-size: 0.9rem; color: #5f5e5a; margin-top: 0.5rem; }
+  .qc-decision-box { border-left: 3px solid #888780; padding: 0.75rem 1rem; background: #f1efe8; }
+  .severity { border-collapse: collapse; width: 100%; font-size: 0.9rem; margin: 1rem 0; }
+  .severity th, .severity td { text-align: left; vertical-align: top; padding: 0.5rem 0.6rem; border-bottom: 1px solid #ddd; }
+  .references { margin-top: 2.5rem; font-size: 0.9rem; }
+  .references ol { padding-left: 1.25rem; }
+  .references li { margin-bottom: 0.5rem; line-height: 1.5; }
+
+  @media (max-width: 640px) {
+    .qc-pair, .qc-pair-labels { grid-template-columns: 1fr; }
+  }
+</style>
