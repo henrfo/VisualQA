@@ -40,6 +40,10 @@ body {
 .embedded .site-topbar { display: none; }
 .embedded body { background: transparent; }
 
+/* Light "paper" callout boxes on artifact pages set only a background; pin dark
+   text globally so they stay readable in the dark overlay (current + future pages). */
+.qc-decision-box, .qc-judgement-box, .qc-solution-box { color: #1a1a1a; }
+
 .site-topbar-brand {
   font-size: 13px;
   font-weight: 600;
