@@ -1,0 +1,75 @@
+---
+layout: default
+title: Ocular eye blink
+---
+
+<section class="artifact-identification">
+  <h2>Eye blink</h2>
+
+  <h3>What you will see</h3>
+  <p>
+    Large, slow deflection with a frontal maximum; often clearly visible in
+    vertical EOG channels.
+  </p>
+
+  <figure class="qc-figure">
+    <img
+      src="/VisualQA/assets/images/eeg_eyeBlink.png"
+      alt="EEG recording showing a large, slow eye-blink deflection with a frontal maximum.">
+  </figure>
+
+  <aside class="qc-info-box qc-judgement-box">
+    <h3>Judgement calls and decision-making considerations</h3>
+    <ul>
+      <li>Did the blink occur during a critical period?</li>
+      <li>Is it isolated or frequent?</li>
+      <li>Is the frontal activity clearly separable from the neural signal?</li>
+      <li>Would rejecting all blink trials leave enough trials in every condition?</li>
+    </ul>
+  </aside>
+
+  <aside class="qc-info-box qc-solution-box">
+    <h3>Possible solution and response</h3>
+    <ul>
+      <li>Improve participant instructions.</li>
+      <li>Mark and reject affected epochs.</li>
+      <li>Use ICA or regression when appropriate.</li>
+      <li>Retain unaffected portions of continuous data.</li>
+    </ul>
+  </aside>
+
+  <section class="references" aria-label="References">
+    <h3>References</h3>
+    <p class="references-placeholder">References will be added.</p>
+  </section>
+</section>
+
+<style>
+  .qc-figure { margin: 1.5rem 0; }
+  .qc-figure > img { width: 100%; height: auto; display: block; }
+  .qc-info-box {
+    margin: 1.25rem 0;
+    padding: 0.9rem 1.1rem;
+    border-left: 4px solid;
+  }
+  .qc-info-box h3 { margin-top: 0; }
+  .qc-info-box ul { margin-bottom: 0; }
+  .qc-judgement-box {
+    border-color: #4f76a1;
+    background: #eaf1f8;
+    color: #1a1a1a;
+  }
+  .qc-solution-box {
+    border-color: #3f8068;
+    background: #e7f3ee;
+    color: #1a1a1a;
+  }
+  .references {
+    margin-top: 2.5rem;
+    font-size: 0.9rem;
+  }
+  .references-placeholder {
+    color: #6b6a65;
+    font-style: italic;
+  }
+</style>
