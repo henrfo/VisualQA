@@ -85,7 +85,10 @@ title: VisualQA
 <div class="artifact-overlay" id="artifact-overlay" hidden>
   <div class="artifact-scrim" id="artifact-scrim"></div>
   <div class="artifact-panel" role="dialog" aria-modal="true" aria-label="Artifact detail">
-    <button class="artifact-close" id="artifact-close" aria-label="Close">✕</button>
+    <div class="artifact-bar">
+      <button class="artifact-back" id="artifact-back">← Back</button>
+      <button class="artifact-close" id="artifact-close" aria-label="Close">✕</button>
+    </div>
     <iframe class="artifact-frame" id="artifact-frame" title="Artifact detail"></iframe>
   </div>
 </div>
@@ -175,14 +178,23 @@ title: VisualQA
     display: flex; flex-direction: column;
     animation: overlay-rise 0.2s ease-out;
   }
+  .artifact-bar {
+    flex: 0 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 10px 8px 14px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .artifact-back {
+    font: inherit; font-size: 13px; font-weight: 600;
+    background: none; border: 0; color: var(--text);
+    cursor: pointer; padding: 6px 4px;
+  }
+  .artifact-back:hover { text-decoration: underline; text-underline-offset: 2px; }
   .artifact-close {
-    position: absolute; top: 12px; right: 14px; z-index: 2;
-    width: 32px; height: 32px; border-radius: 50%;
-    border: 1px solid var(--hairline);
-    background: #ffffff; color: var(--text);
-    font-size: 15px; line-height: 1; cursor: pointer;
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 1px solid var(--hairline); background: none; color: var(--text);
+    font-size: 14px; line-height: 1; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
   }
   .artifact-close:hover { border-color: #aaaaaa; }
   .artifact-frame { flex: 1; width: 100%; border: 0; background: #ffffff; }
@@ -323,6 +335,7 @@ title: VisualQA
   const scrimEl   = document.getElementById('artifact-scrim');
   const frameEl   = document.getElementById('artifact-frame');
   const closeEl   = document.getElementById('artifact-close');
+  const backEl    = document.getElementById('artifact-back');
 
   function pathQuery() {
     return path.length ? '?path=' + encodeURIComponent(path.join('/')) : '';
@@ -368,6 +381,7 @@ title: VisualQA
     }
   }
   closeEl.addEventListener('click', requestClose);
+  backEl.addEventListener('click', requestClose);
   scrimEl.addEventListener('click', requestClose);
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') requestClose();
