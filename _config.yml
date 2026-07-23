@@ -8,5 +8,6 @@ plugins:
 
 exclude:
   - scripts/
+  - vendor/
   - Gemfile
   - Gemfile.lock
