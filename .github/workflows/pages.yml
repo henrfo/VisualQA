@@ -1,3 +1,4 @@
+# Publish repository content when main changes.
 name: Deploy static site to GitHub Pages
 
 on:
