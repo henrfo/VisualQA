@@ -1,0 +1,155 @@
+---
+layout: default
+title: Eye spillover
+---
+
+<section class="artifact-identification">
+  <h2>Eye spillover</h2>
+
+  <p class="one-liner">
+    Signal from moving and blinking eyes propagates along the phase-encode axis,
+    producing streaks or faint replicas of the orbits that extend across the
+    image and into the background. Whether it matters depends almost entirely on
+    which direction the phase-encode axis points.
+  </p>
+
+  <figure class="qc-figure">
+    <img src="/VisualQA/assets/images/eyespill_mriqc_fig1.png" alt="Axial T1-weighted slice with arrows marking streaks of signal extending sideways from the eyes across the image, and a second set of streaks arising from vessel pulsation.">
+    <figcaption>
+      T1w scan from the ABIDE dataset. Arrows mark signal spillover along the
+      phase-encode axis (here right-to-left): green for spillover from eye
+      movements, red for vessel pulsation. Figure&nbsp;1 from
+      <a href="https://doi.org/10.1371/journal.pone.0184661">Esteban et&nbsp;al. (2017)</a>,
+      reproduced under CC&nbsp;BY&nbsp;4.0.<sup><a href="#ref-esteban">1</a></sup>
+    </figcaption>
+  </figure>
+
+  <aside class="qc-decision-box">
+    <h3>The call, in short</h3>
+    <ul>
+      <li><strong>Check the phase-encode direction first.</strong> Axial brain scans are usually phase-encoded left-right precisely so eye artifacts travel across empty space rather than through the brain. If yours is anterior-posterior, the spillover runs into the inferior occipital lobes and is far more damaging.</li>
+      <li>Streaks confined to background, not crossing brain tissue &rarr; note it and move on. Structure in the background is not itself the problem.</li>
+      <li>Streaks crossing brain tissue &rarr; those voxels carry contaminating signal. Judge against your ROI: spillover through occipital cortex matters enormously for a visual study and less for a frontal one.</li>
+      <li>Present across a whole session or site &rarr; this is a prescription issue. Check the phase-encode direction in the protocol before more data is collected.</li>
+      <li><strong>If your data are defaced, you may not be able to assess this at all</strong> &mdash; see below.</li>
+    </ul>
+  </aside>
+
+  <h3>Not to be confused with</h3>
+
+  <ul>
+    <li><strong>Vessel pulsation</strong> &mdash; travels along the same phase-encode axis by the same mechanism, and often appears in the same image. Distinguish by origin: trace the streak back to the orbits or to a vessel. Both are shown in the figure above.</li>
+    <li><strong><a href="/VisualQA/artifacts/mri/aliasing-ghost/">Aliasing ghost</a></strong> &mdash; a discrete displaced copy of the whole head offset by half the FOV, rather than streaks emanating from a specific structure.</li>
+    <li><strong><a href="/VisualQA/artifacts/mri/head-motion/">Head motion</a></strong> &mdash; ringing radiates from all high-contrast boundaries, not from the eyes specifically. The two frequently co-occur, since a participant who moves also blinks.</li>
+  </ul>
+
+  <h3>Where to look</h3>
+
+  <p>
+    Because no signal originates from the air around the head, the background
+    should be empty; visible structure there means something has spilled into it.
+    Spillover is most clearly seen in MRIQC's <strong>background noise panel</strong>,
+    and is frequently detectable in the <strong>standard deviation map</strong> as
+    well.<sup><a href="#ref-provins2023">2</a></sup> Inspecting the background rather
+    than only the brain is the habit that catches this artifact.
+  </p>
+
+  <h3>The defacing problem</h3>
+
+  <p>
+    Defacing &mdash; zeroing the voxels around the face before data sharing &mdash;
+    removes the orbits along with the identifying features. That means the visual
+    evidence for eye spillover is deleted from the image, and quality metrics
+    sensitive to artifacts in that region become uninformative.<sup><a href="#ref-provins2025">3</a></sup>
+    Since most openly shared structural data are defaced, this artifact is often
+    simply <em>unassessable</em> in public datasets, and the affected metrics should
+    be identified and excluded rather than trusted.
+  </p>
+
+  <p>
+    Practical consequence: assess eye spillover on your own data <em>before</em>
+    defacing, and record the rating alongside the shared data. Once it is defaced,
+    that judgment can no longer be made or reproduced by anyone downstream.
+  </p>
+
+  <h3>Severity ladder</h3>
+
+  <table class="severity">
+    <thead>
+      <tr><th>Appearance</th><th>Call</th><th>Reasoning</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>No visible streaking from the orbits</td>
+        <td><span class="qc-label qc-pass">Include</span></td>
+        <td>Nothing to act on.</td>
+      </tr>
+      <tr>
+        <td>Streaks in background only, phase-encode left-right</td>
+        <td><span class="qc-label qc-pass">Include</span></td>
+        <td>Signal is spilling into empty space, as the protocol intends.</td>
+      </tr>
+      <tr>
+        <td>Streaks faintly overlapping brain edge</td>
+        <td><span class="qc-label qc-warn">Uncertain</span></td>
+        <td>Check whether the affected region overlaps your ROI, and inspect segmentation output.</td>
+      </tr>
+      <tr>
+        <td>Clear streaking through brain tissue, especially occipital with anterior-posterior phase-encoding</td>
+        <td><span class="qc-label qc-fail">Exclude</span></td>
+        <td>Contaminated voxels in a region likely to matter; degradation is substantially more troublesome on this axis.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <section class="references" aria-label="References">
+    <h3>References</h3>
+    <ol>
+      <li id="ref-esteban">
+        Esteban, O., Birman, D., Schaer, M., Koyejo, O. O., Poldrack, R. A., &amp;
+        Gorgolewski, K. J. (2017). MRIQC: Advancing the automatic prediction of
+        image quality in MRI from unseen sites. <em>PLOS ONE, 12</em>(9), e0184661.
+        <a href="https://doi.org/10.1371/journal.pone.0184661">https://doi.org/10.1371/journal.pone.0184661</a>
+        Figure&nbsp;1, reproduced under
+        <a href="https://creativecommons.org/licenses/by/4.0/">CC&nbsp;BY&nbsp;4.0</a>.
+      </li>
+      <li id="ref-provins2023">
+        Provins, C., MacNicol, E., Seeley, S. H., Hagmann, P., &amp; Esteban, O.
+        (2023). Quality control in functional MRI studies with MRIQC and fMRIPrep.
+        <em>Frontiers in Neuroimaging, 1</em>, 1073734.
+        <a href="https://doi.org/10.3389/fnimg.2022.1073734">https://doi.org/10.3389/fnimg.2022.1073734</a>
+      </li>
+      <li id="ref-provins2025">
+        Provins, C., Savary, É., Sanchez, T., Mullier, E., Barranco, J.,
+        Fischi-Gómez, E., Alemán-Gómez, Y., Richiardi, J., Poldrack, R. A.,
+        Hagmann, P., &amp; Esteban, O. (2025). Removing facial features from
+        structural MRI images biases visual quality assessment.
+        <em>PLOS Biology, 23</em>(4), e3003149.
+        <a href="https://doi.org/10.1371/journal.pbio.3003149">https://doi.org/10.1371/journal.pbio.3003149</a>
+      </li>
+    </ol>
+  </section>
+</section>
+
+<style>
+  .qc-figure { margin: 1.5rem 0; }
+  .qc-figure > img { width: 100%; height: auto; display: block; }
+  .qc-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .qc-pair img, .qc-figure video { width: 100%; height: auto; display: block; background: #000; }
+  .qc-pair-labels { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .qc-label { display: inline-block; font-size: 0.8rem; padding: 0.15rem 0.5rem; }
+  .qc-pass { background: #e1f5ee; color: #085041; }
+  .qc-warn { background: #fdf4e3; color: #6b4c14; }
+  .qc-fail { background: #fceded; color: #791f1f; }
+  .qc-figure figcaption { font-size: 0.9rem; color: #5f5e5a; margin-top: 0.5rem; }
+  .qc-decision-box { border-left: 3px solid #888780; padding: 0.75rem 1rem; background: #f1efe8; }
+  .severity { border-collapse: collapse; width: 100%; font-size: 0.9rem; margin: 1rem 0; }
+  .severity th, .severity td { text-align: left; vertical-align: top; padding: 0.5rem 0.6rem; border-bottom: 1px solid #ddd; }
+  .references { margin-top: 2.5rem; font-size: 0.9rem; }
+  .references ol { padding-left: 1.25rem; }
+  .references li { margin-bottom: 0.5rem; line-height: 1.5; }
+
+  @media (max-width: 640px) {
+    .qc-pair, .qc-pair-labels { grid-template-columns: 1fr; }
+  }
+</style>
