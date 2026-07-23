@@ -361,8 +361,12 @@ title: VisualQA
   }
 
   function choose(level, key) {
-    if (path[level] === key) {
-      // Toggle off — clicking the selected pill collapses everything below it
+    if (level === 0) {
+      // Modality is a toggle: always one active, and switching it keeps the
+      // open section so the sections stay independent of modality.
+      if (path[0] !== key) path = [key, ...path.slice(1)];
+    } else if (path[level] === key) {
+      // Toggle a section off — collapse everything below it
       path = path.slice(0, level);
     } else {
       path = path.slice(0, level);
@@ -465,6 +469,8 @@ title: VisualQA
       }
       path = restored;
     }
+    // A modality is always active so the sections show independently; default MRI.
+    if (path.length === 0) path = ['MRI'];
     render();
     // Shared deep-link straight into an open artifact (…&view=/artifacts/…)
     const view = new URLSearchParams(location.search).get('view');
