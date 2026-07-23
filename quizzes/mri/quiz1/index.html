@@ -1,0 +1,210 @@
+---
+layout: default
+title: Quiz — rate this scan
+---
+
+<section class="quiz-wrap">
+  <h2>Rate this scan</h2>
+  <p class="quiz-intro">
+    A functional run from a healthy adult, 3&nbsp;T GE Discovery MR750, 2D GRE EPI,
+    3&nbsp;mm isotropic, 43 slices, 180 volumes, auditory block task. Work through
+    the stages in order &mdash; don't skip ahead to the metrics.
+  </p>
+
+  <!-- STAGE 1 -->
+  <div class="quiz-stage" data-stage="1">
+    <h3>1. Look first</h3>
+
+    <figure class="qc-figure">
+      <video
+        src="/VisualQA/assets/videos/quiz01.mp4"
+        poster="/VisualQA/assets/videos/quiz01_poster.jpg"
+        autoplay muted loop playsinline
+        preload="metadata"
+        aria-label="A functional EPI time series played as a loop. The brain shifts position repeatedly across volumes, and the image is grainy throughout."></video>
+      <figcaption>
+        The full run, 180 volumes. Watch the brain edges against the fixed
+        crosshair.
+        <button type="button" class="qc-video-toggle" aria-pressed="false">Pause</button>
+      </figcaption>
+    </figure>
+
+    <p class="quiz-q">On the images alone, how would you rate this run?</p>
+    <div class="quiz-options" data-group="q1" data-answer="none">
+      <button type="button" data-val="exclude">Exclude</button>
+      <button type="button" data-val="poor">Poor</button>
+      <button type="button" data-val="acceptable">Acceptable</button>
+      <button type="button" data-val="excellent">Excellent</button>
+    </div>
+    <div class="quiz-feedback" data-for="q1" hidden>
+      <p>
+        No right answer here &mdash; that's the point. Most raters land on
+        &ldquo;poor&rdquo; or &ldquo;exclude&rdquo;: the image is visibly grainy
+        and the brain clearly shifts between volumes. But a visual impression
+        doesn't tell you <em>how much</em>, and how much is what your exclusion
+        criteria are written in terms of. Keep your rating in mind and continue.
+      </p>
+    </div>
+  </div>
+
+  <!-- STAGE 2 -->
+  <div class="quiz-stage" data-stage="2">
+    <h3>2. Now the numbers</h3>
+
+    <table class="iqm">
+      <thead><tr><th>IQM</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>fd_perc</td><td>26.7%</td></tr>
+        <tr><td>fd_mean</td><td>0.159 mm</td></tr>
+        <tr><td>fd_num</td><td>48 of 180 volumes</td></tr>
+        <tr><td>snr</td><td>2.06</td></tr>
+        <tr><td>tsnr</td><td>19.0</td></tr>
+        <tr><td>gsr_x / gsr_y</td><td>0.025 / 0.039</td></tr>
+        <tr><td>gcor</td><td>0.005</td></tr>
+        <tr><td>efc</td><td>0.548</td></tr>
+        <tr><td>fber</td><td>162.8</td></tr>
+      </tbody>
+    </table>
+
+    <p class="quiz-q">
+      The image is grainy and tSNR is only 19. Is low SNR a <em>separate</em>
+      problem from the motion?
+    </p>
+    <div class="quiz-options" data-group="q2" data-answer="consequence">
+      <button type="button" data-val="separate">Yes &mdash; two independent faults</button>
+      <button type="button" data-val="consequence">Probably not &mdash; largely a consequence of the motion</button>
+      <button type="button" data-val="coil">Yes &mdash; it points to coil failure</button>
+    </div>
+    <div class="quiz-feedback" data-for="q2" hidden>
+      <p><strong>Largely a consequence.</strong> Motion inflates temporal
+      variance, and tSNR is signal divided by that variance &mdash; so a run with
+      26.7% of volumes exceeding the FD threshold will show depressed tSNR
+      whether or not anything else is wrong. Reporting &ldquo;low SNR&rdquo; and
+      &ldquo;high motion&rdquo; as two findings double-counts one problem.</p>
+      <ul>
+        <li><strong>Not ghosting:</strong> GSR is low on both axes. If ghosting were contributing, GSR is the metric that would say so.</li>
+        <li><strong>Not dropout:</strong> that would be regional signal loss near air&ndash;tissue interfaces. Nothing here localises that way, and dropout isn't a category in MRIQC's BOLD rating widget at all.</li>
+        <li><strong>Not obviously coil failure:</strong> coil problems usually produce spatially structured signal loss rather than uniform graininess with high FD.</li>
+      </ul>
+      <p>The general lesson: quality metrics are correlated. To attribute a
+      problem you need the metric that is <em>specific</em> to each candidate
+      &mdash; FD for motion, GSR for ghosting &mdash; not just a list of numbers
+      that happen to look bad.</p>
+    </div>
+  </div>
+
+  <!-- STAGE 3 -->
+  <div class="quiz-stage" data-stage="3">
+    <h3>3. One more thing</h3>
+
+    <p>The report also lists these two fields:</p>
+    <table class="iqm">
+      <tbody>
+        <tr><td>spacing_tr (NIfTI header)</td><td>1.0 s</td></tr>
+        <tr><td>RepetitionTime (BIDS sidecar)</td><td>2.0 s</td></tr>
+      </tbody>
+    </table>
+
+    <p class="quiz-q">Does this matter?</p>
+    <div class="quiz-options" data-group="q3" data-answer="yes">
+      <button type="button" data-val="yes">Yes &mdash; stop and investigate</button>
+      <button type="button" data-val="no">No &mdash; cosmetic, carry on</button>
+    </div>
+    <div class="quiz-feedback" data-for="q3" hidden>
+      <p><strong>Yes.</strong> The image header and the BIDS sidecar disagree
+      about the repetition time by a factor of two. One of them is wrong, and
+      anything that trusts the header &mdash; slice-timing correction, temporal
+      filtering, the frequency axis of any spectral analysis &mdash; will be
+      silently wrong along with it.</p>
+      <p>This isn't an artifact in the image; it's a curation error. It is also
+      invisible unless you read the header, which is why &ldquo;get to know your
+      data&rdquo; checks belong <em>before</em> visual inspection rather than
+      after. Fix or verify against the sequence before processing, and check
+      whether it affects the whole dataset or just this subject.</p>
+    </div>
+  </div>
+
+  <div class="quiz-summary">
+    <h3>What this case teaches</h3>
+    <ul>
+      <li>&ldquo;Looks bad&rdquo; is a prompt to investigate, not a diagnosis.</li>
+      <li>Metrics are correlated; use the artifact-specific one to attribute cause.</li>
+      <li>The most consequential problem in a dataset may not be visible in the image at all.</li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .quiz-wrap { max-width: 46rem; }
+  .quiz-intro { font-size: 0.95rem; }
+  .quiz-stage { border-top: 1px solid #ddd; padding-top: 1rem; margin-top: 1.75rem; }
+  .quiz-q { font-weight: 600; margin-bottom: 0.5rem; }
+  .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+  .quiz-options button {
+    font: inherit; font-size: 0.9rem; padding: 0.4rem 0.8rem; cursor: pointer;
+    background: #fff; border: 1px solid #999; border-radius: 3px;
+  }
+  .quiz-options button:hover { background: #f1efe8; }
+  .quiz-options button.is-correct { background: #e1f5ee; border-color: #085041; color: #085041; }
+  .quiz-options button.is-wrong { background: #fceded; border-color: #791f1f; color: #791f1f; }
+  .quiz-options button.is-neutral { background: #f1efe8; border-color: #555; }
+  .quiz-options button[disabled] { cursor: default; }
+  .quiz-feedback { font-size: 0.92rem; border-left: 3px solid #888780; padding: 0.6rem 1rem; background: #f7f6f2; }
+  .quiz-feedback ul { margin: 0.5rem 0; padding-left: 1.1rem; }
+  .quiz-summary { margin-top: 2rem; border-left: 3px solid #888780; padding: 0.75rem 1rem; background: #f1efe8; }
+  .quiz-summary h3 { margin-top: 0; }
+  .iqm { border-collapse: collapse; font-size: 0.9rem; margin: 0.75rem 0; }
+  .iqm th, .iqm td { text-align: left; padding: 0.35rem 1.25rem 0.35rem 0; border-bottom: 1px solid #e5e5e5; }
+  .qc-figure { margin: 1.5rem 0; }
+  .qc-figure > img, .qc-figure video { width: 100%; height: auto; display: block; background: #000; }
+  .qc-figure figcaption { font-size: 0.9rem; color: #5f5e5a; margin-top: 0.5rem; }
+  .qc-video-toggle { font: inherit; font-size: 0.85rem; margin-left: 0.5rem; cursor: pointer; }
+</style>
+
+<script>
+  // video controls
+  document.querySelectorAll('.qc-figure').forEach(function (fig) {
+    var video = fig.querySelector('video');
+    var button = fig.querySelector('.qc-video-toggle');
+    if (!video) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.autoplay = false;
+      video.pause();
+    }
+
+    if (!button) return;
+    var sync = function () {
+      var paused = video.paused;
+      button.textContent = paused ? 'Play' : 'Pause';
+      button.setAttribute('aria-pressed', String(paused));
+    };
+    button.addEventListener('click', function () {
+      if (video.paused) { video.play(); } else { video.pause(); }
+      sync();
+    });
+    sync();
+  });
+
+  // quiz interactions
+  document.querySelectorAll('.quiz-options').forEach(function (group) {
+    var answer = group.getAttribute('data-answer');
+    var feedback = document.querySelector('.quiz-feedback[data-for="' + group.getAttribute('data-group') + '"]');
+
+    group.querySelectorAll('button').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        group.querySelectorAll('button').forEach(function (b) {
+          b.disabled = true;
+          if (answer === 'none') {
+            if (b === btn) { b.classList.add('is-neutral'); }
+          } else if (b.getAttribute('data-val') === answer) {
+            b.classList.add('is-correct');
+          } else if (b === btn) {
+            b.classList.add('is-wrong');
+          }
+        });
+        if (feedback) { feedback.hidden = false; }
+      });
+    });
+  });
+</script>
