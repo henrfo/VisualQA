@@ -44,10 +44,11 @@ body {
    text globally so they stay readable in the dark overlay (current + future pages). */
 .qc-decision-box, .qc-judgement-box, .qc-solution-box { color: #1a1a1a; }
 
-/* Resource reading-list pages hardcode dark text (light-only design). Render
+/* Resource / workflow pages hardcode dark text (light-only design). Render
    them as a self-contained light card so they read correctly everywhere —
    light/dark, in the overlay or standalone — without dark-on-dark text. */
-.resource-page {
+.resource-page,
+.workflow-page {
   background: #ffffff;
   color: #1a1a1a;
   padding: 28px 30px;

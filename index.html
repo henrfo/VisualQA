@@ -46,10 +46,17 @@ title: VisualQA
   "content": {
     "MRI": {
       "Artifacts": {
-        "Head motion":    { "url": "/artifacts/mri/head-motion/",    "img": "/assets/images/motion_t1_bad.png",      "desc": "Blurring and concentric ringing from the brain shifting between volumes." },
-        "Eye spillover":  { "url": "/artifacts/mri/eye-spill/",      "img": "/assets/images/eyespill_mriqc_fig1.png", "desc": "Signal from moving, blinking eyes streaking along the phase-encode axis." },
-        "Aliasing ghost": { "url": "/artifacts/mri/aliasing-ghost/", "img": "/assets/images/ghost_afni_fig2.png",     "desc": "A faint copy of the brain shifted by half the field of view." },
-        "Wrap-around":    { "url": "/artifacts/mri/wraparound/",     "img": "/assets/images/wraparound_series.png",   "desc": "Anatomy outside the field of view folded back onto the opposite side." }
+        "Head motion":         { "url": "/artifacts/mri/head-motion/",           "img": "/assets/images/motion_t1_bad.png",      "desc": "Blurring and concentric ringing from the brain shifting between volumes." },
+        "Eye spillover":       { "url": "/artifacts/mri/eye-spill/",             "img": "/assets/images/eyespill_mriqc_fig1.png", "desc": "Signal from moving, blinking eyes streaking along the phase-encode axis." },
+        "Aliasing ghost":      { "url": "/artifacts/mri/aliasing-ghost/",        "img": "/assets/images/ghost_afni_fig2.png",     "desc": "A faint copy of the brain shifted by half the field of view." },
+        "Wrap-around":         { "url": "/artifacts/mri/wraparound/",            "img": "/assets/images/wraparound_series.png",   "desc": "Anatomy outside the field of view folded back onto the opposite side." },
+        "Susceptibility dropout": { "url": "/artifacts/mri/susceptibility-artifact/", "img": "/assets/images/ofc_dropout_loop.gif", "desc": "Air–tissue interfaces warp the field, dropping signal and distorting EPI." }
+      },
+      "QC checks": {
+        "Quality control workflow": { "url": "/workflow/mri/", "desc": "Where QC fits in the pipeline, and what to look for at each inspection point." }
+      },
+      "Open Resources": {
+        "Artifact detection & rejection": { "url": "/openResources/MRI/Artifact Detection and Rejection/", "desc": "A reading list for assessing MRI quality and recognizing common artifacts." }
       },
       "Practice": {
         "Rate this scan (quiz)": { "url": "/quizzes/mri/quiz1/", "img": "/assets/videos/quiz01_poster.jpg", "desc": "Walk a functional run through look → metrics → verdict." }
