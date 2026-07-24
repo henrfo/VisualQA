@@ -1,0 +1,440 @@
+---
+layout: default
+title: EEG Artifact Detection and Rejection Resources
+---
+
+<main class="resource-page">
+  <header class="resource-header">
+    <p class="resource-kicker">EEG Open Resources</p>
+    <h1>Artifact Detection and Rejection</h1>
+    <p class="resource-intro">
+      A beginner-friendly reading list for recognizing, rejecting, repairing,
+      and correcting EEG artifacts. Each entry explains what the paper adds and
+      which part is most useful to read first.
+    </p>
+  </header>
+
+  <section class="resource-search" aria-labelledby="resource-search-title">
+    <label id="resource-search-title" for="resource-search-input">Search resources</label>
+    <div class="search-control">
+      <svg class="search-icon" aria-hidden="true" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="6.5"></circle>
+        <path d="m16 16 4 4"></path>
+      </svg>
+      <input
+        id="resource-search-input"
+        type="search"
+        placeholder="Try “ICA”, “eye movement”, an author, or a year"
+        autocomplete="off"
+        aria-describedby="resource-search-status"
+      >
+    </div>
+    <p id="resource-search-status" class="search-status" aria-live="polite">
+      Showing all 8 resources
+    </p>
+  </section>
+
+  <aside class="reading-path" aria-labelledby="reading-path-title">
+    <h2 id="reading-path-title">New to this topic?</h2>
+    <p>
+      Start with <a href="#islam-2016">Islam et al. (2016)</a> for the broad
+      overview, then read <a href="#zhang-2024">Zhang et al. (2024)</a> for a
+      practical test of correction and rejection. Use the remaining papers
+      when you need a specific method.
+    </p>
+  </aside>
+
+  <section class="resource-list" aria-label="Artifact detection and rejection papers">
+    <article class="resource-card" id="junghofer-2000">
+      <div class="resource-meta">
+        <span class="resource-year">2000</span>
+        <span class="resource-tag">Dense-array EEG/MEG</span>
+      </div>
+      <h2>Statistical control of artifacts in dense array EEG/MEG studies</h2>
+      <p class="citation">
+        Junghöfer, M., Elbert, T., Tucker, D. M., &amp; Rockstroh, B.
+        <em>Psychophysiology, 37</em>(4), 523–532.
+      </p>
+      <div class="beginner-notes">
+        <p><strong>What it explains:</strong> A statistical workflow for finding contaminated trials and channels in dense-array recordings, with channel interpolation used to preserve otherwise usable trials.</p>
+        <p><strong>Look at:</strong> The step-by-step rejection criteria and the examples showing why a few bad sensors should not force rejection of an entire trial.</p>
+      </div>
+      <div class="resource-actions">
+        <a class="resource-button primary" href="https://d-nb.info/1104699486/34" target="_blank" rel="noopener">Free PDF</a>
+        <a class="resource-button" href="https://pubmed.ncbi.nlm.nih.gov/10934911/" target="_blank" rel="noopener">PubMed</a>
+      </div>
+    </article>
+
+    <article class="resource-card" id="keren-2010">
+      <div class="resource-meta">
+        <span class="resource-year">2010</span>
+        <span class="resource-tag">Saccades &amp; gamma</span>
+      </div>
+      <h2>Saccadic spike potentials in gamma-band EEG: Characterization, detection and suppression</h2>
+      <p class="citation">
+        Keren, A. S., Yuval-Greenberg, S., &amp; Deouell, L. Y.
+        <em>NeuroImage, 49</em>(3), 2248–2263.
+      </p>
+      <div class="beginner-notes">
+        <p><strong>What it explains:</strong> Why tiny saccades can look like neural gamma-band activity, how the spike potential appears across the scalp, and how it can be detected and reduced.</p>
+        <p><strong>Look at:</strong> The waveform and scalp-topography examples, the detection results, and the tailored ICA procedure.</p>
+      </div>
+      <div class="resource-actions">
+        <a class="resource-button primary" href="https://pubmed.ncbi.nlm.nih.gov/19874901/" target="_blank" rel="noopener">PubMed &amp; abstract</a>
+        <a class="resource-button" href="https://doi.org/10.1016/j.neuroimage.2009.10.057" target="_blank" rel="noopener">Publisher page</a>
+      </div>
+      <p class="access-note">No reliable open PDF was identified for this paper.</p>
+    </article>
+
+    <article class="resource-card" id="nolan-2010">
+      <div class="resource-meta">
+        <span class="resource-year">2010</span>
+        <span class="resource-tag">Automated pipeline</span>
+      </div>
+      <h2>FASTER: Fully Automated Statistical Thresholding for EEG artifact rejection</h2>
+      <p class="citation">
+        Nolan, H., Whelan, R., &amp; Reilly, R. B.
+        <em>Journal of Neuroscience Methods, 192</em>(1), 152–162.
+      </p>
+      <div class="beginner-notes">
+        <p><strong>What it explains:</strong> An automated pipeline that applies statistical thresholds at several levels, including channels, epochs, independent components, and participant averages.</p>
+        <p><strong>Look at:</strong> The pipeline overview, the measures used to flag outliers, and the comparison with supervised cleaning.</p>
+      </div>
+      <div class="resource-actions">
+        <a class="resource-button primary" href="https://www.tara.tcd.ie/tara8/server/api/core/bitstreams/88f16ddf-a597-4db2-af2a-ef7ead1fcc8a/content" target="_blank" rel="noopener">Free repository PDF</a>
+        <a class="resource-button" href="https://doi.org/10.1016/j.jneumeth.2010.07.015" target="_blank" rel="noopener">DOI</a>
+      </div>
+    </article>
+
+    <article class="resource-card" id="mognon-2011">
+      <div class="resource-meta">
+        <span class="resource-year">2011</span>
+        <span class="resource-tag">ICA classification</span>
+      </div>
+      <h2>ADJUST: An automatic EEG artifact detector based on spatial and temporal features</h2>
+      <p class="citation">
+        Mognon, A., Jovicich, J., Bruzzone, L., &amp; Buiatti, M.
+        <em>Psychophysiology, 48</em>(2), 229–240.
+      </p>
+      <div class="beginner-notes">
+        <p><strong>What it explains:</strong> An automatic method for labeling ICA components associated with blinks, eye movements, and generic discontinuities.</p>
+        <p><strong>Look at:</strong> The spatial and temporal features used by the classifier and the examples of artifact versus neural components.</p>
+      </div>
+      <div class="resource-actions">
+        <a class="resource-button primary" href="https://www.unicog.org/publications/MognonBuiatti_ADJUST_Psychophysiology2011.pdf" target="_blank" rel="noopener">Free PDF</a>
+        <a class="resource-button" href="https://doi.org/10.1111/j.1469-8986.2010.01061.x" target="_blank" rel="noopener">DOI</a>
+      </div>
+    </article>
+
+    <article class="resource-card" id="winkler-2015">
+      <div class="resource-meta">
+        <span class="resource-year">2015</span>
+        <span class="resource-tag">Filtering before ICA</span>
+      </div>
+      <h2>On the influence of high-pass filtering on ICA-based artifact reduction in EEG-ERP</h2>
+      <p class="citation">
+        Winkler, I., Debener, S., Müller, K. R., &amp; Tangermann, M.
+        <em>2015 IEEE EMBC</em>, 4101–4105.
+      </p>
+      <div class="beginner-notes">
+        <p><strong>What it explains:</strong> How the high-pass filter applied before ICA changes decomposition quality and downstream artifact reduction.</p>
+        <p><strong>Look at:</strong> The comparison across filter cutoffs and the outcomes for signal-to-noise ratio, classification accuracy, and near-dipolar components.</p>
+      </div>
+      <div class="resource-actions">
+        <a class="resource-button primary" href="https://pubmed.ncbi.nlm.nih.gov/26737196/" target="_blank" rel="noopener">PubMed &amp; abstract</a>
+        <a class="resource-button" href="https://doi.org/10.1109/EMBC.2015.7319296" target="_blank" rel="noopener">DOI</a>
+      </div>
+      <p class="access-note">No stable open PDF was identified for this paper.</p>
+    </article>
+
+    <article class="resource-card" id="islam-2016">
+      <div class="resource-meta">
+        <span class="resource-year">2016</span>
+        <span class="resource-tag recommended">Recommended first read</span>
+      </div>
+      <h2>Methods for artifact detection and removal from scalp EEG: A review</h2>
+      <p class="citation">
+        Islam, M. K., Rastegarnia, A., &amp; Yang, Z.
+        <em>Neurophysiologie Clinique, 46</em>(4–5), 287–305.
+      </p>
+      <div class="beginner-notes">
+        <p><strong>What it explains:</strong> A broad map of EEG artifact types and the main families of detection and removal methods, including their strengths and limitations.</p>
+        <p><strong>Look at:</strong> The method-comparison sections and tables. They are useful for choosing an approach based on artifact type rather than assuming one method works for everything.</p>
+      </div>
+      <div class="resource-actions">
+        <a class="resource-button primary" href="https://experts.umn.edu/en/publications/les-m%C3%A9thodes-de-d%C3%A9tection-et-de-rejet-dartefact-de-leeg-de-scalp-/" target="_blank" rel="noopener">Free abstract</a>
+        <a class="resource-button" href="https://doi.org/10.1016/j.neucli.2016.07.002" target="_blank" rel="noopener">DOI</a>
+      </div>
+      <p class="access-note">An institutional manuscript exists, but its certificate is currently unreliable, so it is not linked here.</p>
+    </article>
+
+    <article class="resource-card" id="jas-2017">
+      <div class="resource-meta">
+        <span class="resource-year">2017</span>
+        <span class="resource-tag">Automated repair</span>
+      </div>
+      <h2>Autoreject: Automated artifact rejection for MEG and EEG data</h2>
+      <p class="citation">
+        Jas, M., Engemann, D. A., Bekhti, Y., Raimondo, F., &amp; Gramfort, A.
+        <em>NeuroImage, 159</em>, 417–429.
+      </p>
+      <div class="beginner-notes">
+        <p><strong>What it explains:</strong> A cross-validation approach that learns data-driven thresholds for rejecting bad trials and repairing bad sensors instead of relying on one manually chosen cutoff.</p>
+        <p><strong>Look at:</strong> The difference between global and local autoreject, how thresholds are learned, and the before/after examples.</p>
+      </div>
+      <div class="resource-actions">
+        <a class="resource-button primary" href="https://arxiv.org/pdf/1612.08194" target="_blank" rel="noopener">Free PDF</a>
+        <a class="resource-button" href="https://doi.org/10.1016/j.neuroimage.2017.06.030" target="_blank" rel="noopener">DOI</a>
+      </div>
+    </article>
+
+    <article class="resource-card" id="zhang-2024">
+      <div class="resource-meta">
+        <span class="resource-year">2024</span>
+        <span class="resource-tag recommended">Practical evaluation</span>
+      </div>
+      <h2>Evaluating the effectiveness of artifact correction and rejection in ERP research</h2>
+      <p class="citation">
+        Zhang, G., Garrett, D. R., Simmons, A. M., Kiat, J. E., &amp; Luck, S. J.
+        <em>Psychophysiology, 61</em>, e14511.
+      </p>
+      <div class="beginner-notes">
+        <p><strong>What it explains:</strong> A practical framework for testing whether artifact procedures reduce both condition-related confounds and random noise. It evaluates ICA blink correction plus extreme-value trial rejection across five common ERP components.</p>
+        <p><strong>Look at:</strong> The two goals of artifact handling, the evaluation workflow, and the component-by-component results showing that correction helps but may not remove a confound completely.</p>
+      </div>
+      <div class="resource-actions">
+        <a class="resource-button primary" href="https://zhangg.net/publications/Zhang_et_al-2024-artifact_Psychophysiology.pdf" target="_blank" rel="noopener">Free PDF</a>
+        <a class="resource-button" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11021170/" target="_blank" rel="noopener">Free full text</a>
+        <a class="resource-button" href="https://doi.org/10.1111/psyp.14511" target="_blank" rel="noopener">DOI</a>
+      </div>
+    </article>
+  </section>
+
+  <div id="resource-no-results" class="no-results" hidden>
+    <h2>No matching resources</h2>
+    <p>Try a broader term, a method name, an author, or a publication year.</p>
+    <button id="resource-search-reset" type="button">Clear search</button>
+  </div>
+
+  <p class="resource-footnote">
+    “Free PDF” links point to openly accessible copies hosted by authors,
+    institutions, or preprint repositories. Publisher availability can change.
+  </p>
+</main>
+
+<style>
+  .resource-page { max-width: 800px; margin: 0 auto; }
+  .resource-header { margin-bottom: 1.75rem; }
+  .resource-kicker {
+    margin-bottom: 0.35rem;
+    color: #4f76a1;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .resource-header h1 {
+    margin-bottom: 0.65rem;
+    font-size: clamp(1.8rem, 5vw, 2.65rem);
+    line-height: 1.12;
+  }
+  .resource-intro {
+    max-width: 680px;
+    color: #565652;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  .resource-search {
+    margin: 1.5rem 0;
+    padding: 1rem 1.15rem;
+    border: 1px solid #d7e1eb;
+    border-radius: 7px;
+    background: #f7fafc;
+  }
+  .resource-search label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #273d52;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .search-control { position: relative; }
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 0.8rem;
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: #697b8c;
+    stroke-linecap: round;
+    stroke-width: 2;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .search-control input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.72rem 0.85rem 0.72rem 2.35rem;
+    border: 1px solid #aebdca;
+    border-radius: 5px;
+    background: #fff;
+    color: #292927;
+    font: inherit;
+  }
+  .search-control input:focus {
+    border-color: #4f76a1;
+    outline: 3px solid #dce9f5;
+  }
+  .search-status {
+    margin: 0.45rem 0 0;
+    color: #68737d;
+    font-size: 0.76rem;
+  }
+  .reading-path {
+    margin: 1.5rem 0 2rem;
+    padding: 1rem 1.15rem;
+    border-left: 4px solid #4f76a1;
+    background: #eaf1f8;
+  }
+  .reading-path h2 { margin-bottom: 0.35rem; font-size: 1rem; }
+  .reading-path p { line-height: 1.6; }
+  .reading-path a { color: #244f78; }
+  .resource-list { display: grid; gap: 1rem; }
+  .resource-card {
+    padding: 1.15rem 1.2rem;
+    border: 1px solid #deddd8;
+    border-radius: 7px;
+    background: #fff;
+  }
+  .resource-card[hidden] { display: none; }
+  .resource-card:target {
+    border-color: #4f76a1;
+    box-shadow: 0 0 0 3px #eaf1f8;
+  }
+  .resource-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.6rem;
+  }
+  .resource-year,
+  .resource-tag {
+    display: inline-block;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    background: #f0efeb;
+    color: #55544f;
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+  .resource-tag.recommended { background: #e7f3ee; color: #25624d; }
+  .resource-card h2 {
+    margin-bottom: 0.4rem;
+    font-size: 1.08rem;
+    line-height: 1.35;
+  }
+  .citation {
+    margin-bottom: 0.85rem;
+    color: #66645f;
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+  .beginner-notes {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0.85rem 0 1rem;
+  }
+  .beginner-notes p { line-height: 1.58; }
+  .resource-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .resource-button {
+    display: inline-block;
+    padding: 0.38rem 0.65rem;
+    border: 1px solid #c8c7c2;
+    border-radius: 4px;
+    color: #292927;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .resource-button:hover { border-color: #777570; }
+  .resource-button.primary {
+    border-color: #356c58;
+    background: #e7f3ee;
+    color: #205441;
+  }
+  .access-note {
+    margin-top: 0.65rem;
+    color: #74726d;
+    font-size: 0.76rem;
+    font-style: italic;
+  }
+  .resource-footnote {
+    margin-top: 1.4rem;
+    color: #74726d;
+    font-size: 0.76rem;
+    line-height: 1.5;
+  }
+  .no-results {
+    padding: 2rem 1.25rem;
+    border: 1px dashed #aebdca;
+    border-radius: 7px;
+    text-align: center;
+  }
+  .no-results h2 { margin-bottom: 0.35rem; font-size: 1.05rem; }
+  .no-results p { color: #66645f; }
+  .no-results button {
+    margin-top: 0.85rem;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid #4f76a1;
+    border-radius: 4px;
+    background: #eaf1f8;
+    color: #244f78;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  @media (max-width: 600px) {
+    .resource-card { padding: 1rem; }
+    .resource-button { flex: 1 1 auto; text-align: center; }
+  }
+</style>
+
+<script>
+  (function () {
+    var input = document.getElementById("resource-search-input");
+    var cards = Array.from(document.querySelectorAll(".resource-card"));
+    var status = document.getElementById("resource-search-status");
+    var noResults = document.getElementById("resource-no-results");
+    var reset = document.getElementById("resource-search-reset");
+
+    function updateResults() {
+      var query = input.value.trim().toLocaleLowerCase();
+      var matches = 0;
+
+      cards.forEach(function (card) {
+        var isMatch = !query || card.textContent.toLocaleLowerCase().includes(query);
+        card.hidden = !isMatch;
+        if (isMatch) matches += 1;
+      });
+
+      noResults.hidden = matches !== 0;
+      status.textContent = query
+        ? matches + (matches === 1 ? " resource found" : " resources found")
+        : "Showing all " + cards.length + " resources";
+    }
+
+    input.addEventListener("input", updateResults);
+    reset.addEventListener("click", function () {
+      input.value = "";
+      updateResults();
+      input.focus();
+    });
+  }());
+</script>
