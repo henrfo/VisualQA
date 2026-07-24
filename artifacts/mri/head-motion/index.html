@@ -10,7 +10,11 @@ permalink: /artifacts/mri/head-motion/
   <p class="one-liner">
     Blurring and concentric ringing on structural scans, most visible at
     high-contrast boundaries; on functional scans, the brain visibly shifts
-    position between volumes.
+    position between volumes. It is the most consequential artifact in this
+    catalogue, and the one least well handled by looking at pictures &mdash;
+    motion small enough to pass visual inspection still biases the numbers
+    you extract afterwards, and it does so in the direction of your hypothesis
+    more often than chance.
   </p>
 
   <figure class="qc-figure">
@@ -57,9 +61,142 @@ permalink: /artifacts/mri/head-motion/
       <li>Ringing confined to skull and scalp, gray/white boundary intact &rarr; usable for volumetrics; re-inspect before surface-based analysis.</li>
       <li>Ringing reaching cortex, or blurred gray/white boundary &rarr; run the segmentation and judge the surfaces, not the raw image.</li>
       <li>Functional: check framewise displacement before eyeballing. Decide against your pre-registered threshold, not against these examples.</li>
+      <li><strong>Set the threshold before you look.</strong> Motion is correlated with age, diagnosis, symptom severity, and body size, so a threshold chosen after seeing the data can silently become a threshold on the variable you are studying.</li>
+      <li><strong>Passing inspection is not the same as being unaffected.</strong> See "Motion is a confound, not only an artifact" below &mdash; this is the section that matters most on this page.</li>
       <li>Participant still in the scanner? Rescan. Nothing below beats that.</li>
     </ul>
   </aside>
+
+  <h3>Not to be confused with</h3>
+
+  <ul>
+    <li><strong>Gibbs (truncation) ringing</strong> &mdash; the most common misidentification. Gibbs ringing is regular, evenly spaced, runs parallel to a high-contrast boundary, decays within a few voxels of it, and is present in perfectly still scans; it is a consequence of finite k-space sampling, not of the participant. Motion ringing is irregularly spaced, travels further into the image, and comes with blurring that Gibbs does not produce.</li>
+    <li><strong><a href="/VisualQA/artifacts/mri/eye-spill/">Eye spillover</a> and vessel pulsation</strong> &mdash; streaks that emanate from a specific structure along the phase-encode axis, rather than ringing that radiates from every high-contrast edge. They co-occur with motion often enough that finding one is a reason to look for the other.</li>
+    <li><strong><a href="/VisualQA/artifacts/mri/aliasing-ghost/">Aliasing ghost</a></strong> &mdash; a discrete displaced copy of the head at a half-FOV offset, not a graded ripple.</li>
+    <li><strong><a href="/VisualQA/artifacts/mri/susceptibility-artifact/">Susceptibility artifact</a></strong> &mdash; stationary signal loss at air&ndash;tissue interfaces. It does not vary across a functional run; motion does. If a dark region breathes over time, that is motion, or motion interacting with the field.</li>
+    <li><strong>Bias field / intensity non-uniformity</strong> &mdash; smooth, low-spatial-frequency shading across the image with no ringing and no edge blurring.</li>
+  </ul>
+
+  <h3>Where to look</h3>
+
+  <p>
+    On structural scans, inspect the <strong>background</strong> as well as the
+    brain: motion propagates ripples into the air around the head, where nothing
+    should be. Then inspect the <strong>gray/white boundary at high zoom</strong>,
+    which is where blurring becomes decision-relevant. Among MRIQC's image
+    quality metrics, the coefficient of joint variation and the entropy focus
+    criterion are the ones that respond most directly to motion-induced blurring
+    and ghosting.<sup><a href="#ref-provins">2</a></sup> Crucially, if the scan is
+    destined for morphometry, <strong>judge the segmentation output rather than
+    the raw image</strong> &mdash; a scan can look tolerable and still yield
+    displaced surfaces.
+  </p>
+
+  <p>
+    On functional scans, the numbers come first and the pictures second.
+    <strong>Framewise displacement</strong> and <strong>DVARS</strong> traces
+    identify which volumes are affected and when; the <strong>carpet plot</strong>
+    shows whether those events produced brain-wide signal changes, which is what
+    actually contaminates your
+    analysis.<sup><a href="#ref-provins">2</a></sup> A run with a handful of
+    isolated spikes is a different problem from one with continuous drift, and
+    the two call for different remedies even at identical mean framewise
+    displacement.
+  </p>
+
+  <h3>Motion is a confound, not only an artifact</h3>
+
+  <p>
+    Everything above treats motion as something that makes images look wrong.
+    The larger problem is that it makes results come out wrong, in ways that
+    survive visual QC.
+  </p>
+
+  <p>
+    On <strong>structural</strong> data, motion during acquisition systematically
+    reduces estimated gray matter volume and cortical thickness &mdash; that is,
+    it looks like atrophy.<sup><a href="#ref-reuter">3</a></sup> The effect is
+    present at motion levels too subtle to flag by
+    eye.<sup><a href="#ref-ab">4</a></sup> Any study comparing a group that moves
+    more against a group that moves less is therefore at risk of recovering a
+    thickness difference that is entirely artifactual.
+  </p>
+
+  <p>
+    On <strong>functional</strong> data, motion introduces distance-dependent bias
+    into connectivity estimates: correlations between nearby regions are inflated
+    and correlations between distant regions are reduced, producing exactly the
+    pattern many developmental and clinical hypotheses
+    predict.<sup><a href="#ref-power">5</a>,<a href="#ref-vandijk">6</a></sup>
+    Because children move more than adults, older adults more than younger, and
+    patients more than controls, motion is confounded with the grouping variable
+    in a large fraction of the literature.<sup><a href="#ref-satterthwaite">7</a></sup>
+    Denoising strategies differ substantially in how well they suppress this, and
+    none removes it entirely.<sup><a href="#ref-parkes">8</a></sup>
+  </p>
+
+  <p>
+    The practical implications for QC are three. Treat motion as a
+    <strong>measured variable</strong>, not merely an inclusion gate &mdash;
+    retain it and report it. <strong>Test whether it differs across your
+    groups</strong>, and say so if it does. And apply
+    <strong>identical criteria to every group</strong>: exclusion thresholds
+    applied after inspection can themselves induce the bias they were meant to
+    prevent, because excluding high-motion participants preferentially removes
+    one group.
+  </p>
+
+  <h3>Calibrating your eye</h3>
+
+  <p>
+    Visual rating of motion has poor inter-rater reliability, and the usual
+    reason is that raters have never seen the same brain with and without it.
+    The MR-ART dataset addresses this directly: 148 participants scanned in
+    still and deliberately-moving conditions, with expert quality scores and
+    MRIQC metrics included.<sup><a href="#ref-narai">9</a></sup> Working through a
+    handful of matched pairs is the fastest way to learn where your own threshold
+    sits, and to discover how much motion passes unnoticed.
+  </p>
+
+  <h3>Severity ladder</h3>
+
+  <table class="severity">
+    <thead>
+      <tr><th>Appearance</th><th>Call</th><th>Reasoning</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>No visible ringing; sharp gray/white boundary; functional traces below threshold</td>
+        <td><span class="qc-label qc-pass">Include</span></td>
+        <td>Still record the motion estimates as covariates. "Passed" is not "unaffected".</td>
+      </tr>
+      <tr>
+        <td>Faint ringing over skull and scalp only, boundary intact</td>
+        <td><span class="qc-label qc-pass">Include</span></td>
+        <td>Acceptable for volumetrics; re-inspect after surface reconstruction.</td>
+      </tr>
+      <tr>
+        <td>Ringing reaching cortex, or gray/white boundary visibly softened</td>
+        <td><span class="qc-label qc-warn">Uncertain</span></td>
+        <td>Judge the segmentation, not the image. Morphometric estimates from this scan are likely biased downward.</td>
+      </tr>
+      <tr>
+        <td>Functional run with isolated high-displacement volumes, otherwise stable</td>
+        <td><span class="qc-label qc-warn">Uncertain</span></td>
+        <td>Potentially recoverable by censoring, depending on how many volumes remain and on your pre-specified strategy.</td>
+      </tr>
+      <tr>
+        <td>Continuous drift or repeated large displacements through the run</td>
+        <td><span class="qc-label qc-fail">Exclude</span></td>
+        <td>Censoring cannot rescue a run in which most volumes are affected, and the residual bias is systematic rather than random.</td>
+      </tr>
+      <tr>
+        <td>Structure unidentifiable; boundaries lost</td>
+        <td><span class="qc-label qc-fail">Exclude</span></td>
+        <td>No downstream step recovers this. Rescan if the participant is still available.</td>
+      </tr>
+    </tbody>
+  </table>
 
   <section class="references" aria-label="References">
     <h3>References</h3>
@@ -73,19 +210,81 @@ permalink: /artifacts/mri/head-motion/
         <em>BMC Neurology, 19</em>(1), 61.
         <a href="https://doi.org/10.1186/s12883-019-1294-6">https://doi.org/10.1186/s12883-019-1294-6</a>
       </li>
+      <li id="ref-provins">
+        Provins, C., MacNicol, E., Seeley, S. H., Hagmann, P., &amp; Esteban, O.
+        (2023). Quality control in functional MRI studies with MRIQC and fMRIPrep.
+        <em>Frontiers in Neuroimaging, 1</em>, 1073734.
+        <a href="https://doi.org/10.3389/fnimg.2022.1073734">https://doi.org/10.3389/fnimg.2022.1073734</a>
+      </li>
+      <li id="ref-reuter">
+        Reuter, M., Tisdall, M. D., Qureshi, A., Buckner, R. L.,
+        van der Kouwe, A. J. W., &amp; Fischl, B. (2015). Head motion during MRI
+        acquisition reduces gray matter volume and thickness estimates.
+        <em>NeuroImage, 107</em>, 107&ndash;115.
+        <a href="https://doi.org/10.1016/j.neuroimage.2014.12.006">https://doi.org/10.1016/j.neuroimage.2014.12.006</a>
+      </li>
+      <li id="ref-ab">
+        Alexander-Bloch, A., Clasen, L., Stockman, M., Ronan, L., Lalonde, F.,
+        Giedd, J., &amp; Raznahan, A. (2016). Subtle in-scanner motion biases
+        automated measurement of brain anatomy from in vivo MRI.
+        <em>Human Brain Mapping, 37</em>(7), 2385&ndash;2397.
+        <a href="https://doi.org/10.1002/hbm.23180">https://doi.org/10.1002/hbm.23180</a>
+      </li>
+      <li id="ref-power">
+        Power, J. D., Barnes, K. A., Snyder, A. Z., Schlaggar, B. L., &amp;
+        Petersen, S. E. (2012). Spurious but systematic correlations in functional
+        connectivity MRI networks arise from subject motion.
+        <em>NeuroImage, 59</em>(3), 2142&ndash;2154.
+        <a href="https://doi.org/10.1016/j.neuroimage.2011.10.018">https://doi.org/10.1016/j.neuroimage.2011.10.018</a>
+      </li>
+      <li id="ref-vandijk">
+        Van Dijk, K. R. A., Sabuncu, M. R., &amp; Buckner, R. L. (2012). The
+        influence of head motion on intrinsic functional connectivity MRI.
+        <em>NeuroImage, 59</em>(1), 431&ndash;438.
+        <a href="https://doi.org/10.1016/j.neuroimage.2011.07.044">https://doi.org/10.1016/j.neuroimage.2011.07.044</a>
+      </li>
+      <li id="ref-satterthwaite">
+        Satterthwaite, T. D., Wolf, D. H., Loughead, J., Ruparel, K.,
+        Elliott, M. A., Hakonarson, H., Gur, R. C., &amp; Gur, R. E. (2012).
+        Impact of in-scanner head motion on multiple measures of functional
+        connectivity: Relevance for studies of neurodevelopment in youth.
+        <em>NeuroImage, 60</em>(1), 623&ndash;632.
+        <a href="https://doi.org/10.1016/j.neuroimage.2011.12.063">https://doi.org/10.1016/j.neuroimage.2011.12.063</a>
+      </li>
+      <li id="ref-parkes">
+        Parkes, L., Fulcher, B., Yücel, M., &amp; Fornito, A. (2018). An
+        evaluation of the efficacy, reliability, and sensitivity of motion
+        correction strategies for resting-state functional MRI.
+        <em>NeuroImage, 171</em>, 415&ndash;436.
+        <a href="https://doi.org/10.1016/j.neuroimage.2017.12.073">https://doi.org/10.1016/j.neuroimage.2017.12.073</a>
+      </li>
+      <li id="ref-narai">
+        Nárai, Á., Hermann, P., Auer, T., Kemenczky, P., Szalma, J.,
+        Homolya, I., Somogyi, E., Vakli, P., Weiss, B., &amp; Vidnyánszky, Z.
+        (2022). Movement-related artefacts (MR-ART) dataset of matched
+        motion-corrupted and clean structural MRI brain scans.
+        <em>Scientific Data, 9</em>(1), 630.
+        <a href="https://doi.org/10.1038/s41597-022-01694-8">https://doi.org/10.1038/s41597-022-01694-8</a>
+        OpenNeuro <code>ds004173</code>.
+      </li>
     </ol>
   </section>
 </section>
 
 <style>
+  .qc-figure { margin: 1.5rem 0; }
+  .qc-figure > img { width: 100%; height: auto; display: block; }
   .qc-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
   .qc-pair img, .qc-figure video { width: 100%; height: auto; display: block; background: #000; }
   .qc-pair-labels { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
   .qc-label { display: inline-block; font-size: 0.8rem; padding: 0.15rem 0.5rem; margin-top: 0.35rem; }
   .qc-pass { background: #e1f5ee; color: #085041; }
+  .qc-warn { background: #fdf4e3; color: #6b4c14; }
   .qc-fail { background: #fceded; color: #791f1f; }
   .qc-figure figcaption { font-size: 0.9rem; color: #5f5e5a; margin-top: 0.5rem; }
   .qc-decision-box { border-left: 3px solid #888780; padding: 0.75rem 1rem; background: #f1efe8; }
+  .severity { border-collapse: collapse; width: 100%; font-size: 0.9rem; margin: 1rem 0; }
+  .severity th, .severity td { text-align: left; vertical-align: top; padding: 0.5rem 0.6rem; border-bottom: 1px solid #ddd; }
   .references { margin-top: 2.5rem; font-size: 0.9rem; }
   .references ol { padding-left: 1.25rem; }
   .references li { margin-bottom: 0.5rem; line-height: 1.5; }
