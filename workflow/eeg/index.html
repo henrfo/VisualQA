@@ -4,44 +4,411 @@ title: EEG Quality Control Workflow
 permalink: /workflow/eeg/
 ---
 
-<section class="workflow-page">
-  <h1>EEG Quality Control Workflow</h1>
+<main class="workflow-page">
+  <header class="workflow-header">
+    <p class="workflow-kicker">EEG quality assurance</p>
+    <h1>EEG Quality Control Workflow</h1>
+    <p class="workflow-intro">
+      A practical path from raw recordings to analysis-ready EEG. Quality
+      control is not a single cleaning step: inspect the data, make an explicit
+      decision, apply the least destructive response, and check the result
+      again before analysis.
+    </p>
+  </header>
 
-  <p>
-    Where quality control fits in the EEG pipeline, and what to look for at each
-    inspection point. Raw data are inspected before any processing is run; processed
-    data are inspected again before they enter analysis.
-  </p>
+  <aside class="workflow-principle" aria-labelledby="principle-title">
+    <h2 id="principle-title">The central rule</h2>
+    <p>
+      Do not ask only, “Can this artifact be removed?” Ask whether it matters
+      for the planned analysis, whether the correction may remove neural
+      signal, and whether enough comparable data remain in every condition.
+    </p>
+  </aside>
 
-  <h2>Pipeline</h2>
-  <ol>
-    <li><strong>Data acquisition</strong><br>Record EEG data with careful setup, annotations, and metadata.</li>
-    <li><strong>Preprocessing</strong><br>Apply filtering, re-referencing, artifact correction, and epoching.</li>
-    <li><strong>Analysis</strong><br>Fit models, inspect outputs, and report findings.</li>
-  </ol>
+  <section class="overview-section" aria-labelledby="overview-title">
+    <div class="section-heading">
+      <div>
+        <p class="section-kicker">Complete decision tree</p>
+        <h2 id="overview-title">Workflow at a glance</h2>
+      </div>
+      <div class="figure-actions">
+        <a class="workflow-button primary" href="/VisualQA/assets/images/eeg_QA_workflow.pdf" target="_blank" rel="noopener">Open full PDF</a>
+        <a class="workflow-button" href="/VisualQA/assets/images/eeg_QA_workflow.pdf" download>Download PDF</a>
+      </div>
+    </div>
 
-  <h2>Checklists</h2>
-  <p>
-    Tick items as you review each recording. Use the checklists below during the
-    relevant inspection point.
-  </p>
+    <figure class="workflow-figure">
+      <a href="/VisualQA/assets/images/eeg_QA_workflow.pdf" target="_blank" rel="noopener" aria-label="Open the full EEG quality assurance workflow PDF">
+        <img
+          src="/VisualQA/assets/images/eeg_QA_workflow.png"
+          alt="EEG quality assurance decision tree from loading raw data through channel, noise, artifact, usability, validation, and documentation decisions.">
+      </a>
+      <figcaption>
+        Follow the main vertical path from top to bottom. Side branches show
+        what to do when a channel, dataset, or artifact requires action.
+        Select the figure to open the original PDF.
+      </figcaption>
+    </figure>
 
-  <h3>Raw data</h3>
-  <ul>
-    <li><a href="/VisualQA/assets/checklists/eeg-qa-checklist-data-collection.docx">Data collection checklist</a></li>
-    <li><a href="/VisualQA/assets/checklists/eeg-qa-checklist-data-processing.docx">Data processing checklist</a></li>
-  </ul>
+    <div class="workflow-legend" aria-label="Workflow color legend">
+      <span><i class="legend-swatch step"></i>Process or inspection step</span>
+      <span><i class="legend-swatch decision"></i>Decision point</span>
+      <span><i class="legend-swatch action"></i>Corrective action</span>
+      <span><i class="legend-swatch stop"></i>Restrict or exclude</span>
+    </div>
+  </section>
 
-  <h3>Inspection points</h3>
-  <p>
-    Inspect the raw recording before processing begins. Revisit the relevant checklist
-    after any major preprocessing change.
-  </p>
-</section>
+  <section class="stage-section" aria-labelledby="stages-title">
+    <div class="section-heading">
+      <div>
+        <p class="section-kicker">How to use the workflow</p>
+        <h2 id="stages-title">Four quality-control stages</h2>
+      </div>
+    </div>
+
+    <div class="stage-list">
+      <article class="stage-card stage-blue">
+        <div class="stage-index" aria-hidden="true">1</div>
+        <div class="stage-content">
+          <p class="stage-kicker">Before preprocessing</p>
+          <h3>Confirm data integrity and inspect the continuous recording</h3>
+          <p>
+            Load the raw EEG together with channel information, sampling rate,
+            event markers, reference information, and acquisition notes.
+            Confirm that the recording is complete before changing it.
+          </p>
+          <ul>
+            <li>Check channel names, types, locations, reference, and sampling rate.</li>
+            <li>Confirm event codes, timing, recording duration, and missing segments.</li>
+            <li>Scroll through continuous data at more than one time scale.</li>
+            <li>Identify persistently poor-quality channels before running ICA.</li>
+          </ul>
+          <aside class="decision-box">
+            <strong>Decision:</strong> Are any channels clearly poor quality?
+            If yes, mark them and decide whether removal or interpolation is
+            justified. Keep a record of the original channel status.
+          </aside>
+        </div>
+      </article>
+
+      <article class="stage-card stage-teal">
+        <div class="stage-index" aria-hidden="true">2</div>
+        <div class="stage-content">
+          <p class="stage-kicker">Dataset-level check</p>
+          <h3>Assess global and systematic noise</h3>
+          <p>
+            Look beyond individual electrodes. Line noise, reference problems,
+            clipping, drift, cable movement, and widespread contamination can
+            make an entire segment or recording unsuitable.
+          </p>
+          <ul>
+            <li>Inspect amplitude ranges, spectra, line noise, drift, and clipping.</li>
+            <li>Check whether noise is brief, continuous, or condition-related.</li>
+            <li>Compare affected periods with task events and participant responses.</li>
+          </ul>
+          <aside class="decision-box">
+            <strong>Decision:</strong> Is data quality recoverable without
+            distorting the signal of interest?
+          </aside>
+          <aside class="stop-box">
+            <strong>If not:</strong> repair only when defensible; otherwise
+            restrict the affected analysis or exclude the segment, run, or
+            participant using criteria defined in advance.
+          </aside>
+        </div>
+      </article>
+
+      <article class="stage-card stage-violet">
+        <div class="stage-index" aria-hidden="true">3</div>
+        <div class="stage-content">
+          <p class="stage-kicker">Preprocess and characterize</p>
+          <h3>Identify artifacts, then choose a response based on impact</h3>
+          <p>
+            Apply and review preprocessing in a documented order. Filtering,
+            re-referencing, resampling, ICA, regression, rejection, and
+            interpolation all change the data and should not be treated as
+            automatic improvements.
+          </p>
+          <ul>
+            <li>Characterize ocular, muscle, cardiac, electrode, and physiological artifacts.</li>
+            <li>Ask whether each artifact overlaps the signal, condition, or time window of interest.</li>
+            <li>Compare data before and after every consequential correction.</li>
+          </ul>
+          <aside class="action-box">
+            <strong>If the artifact has a meaningful impact:</strong> choose a
+            specific strategy - correct, annotate, reject, or retain - and
+            state why its assumptions fit this dataset.
+          </aside>
+          <div class="stage-links">
+            <a href="/VisualQA/artifacts/eeg/">See EEG artifact examples</a>
+            <a href="/VisualQA/open-resources/eeg/artifact-detection/">Artifact detection resources</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="stage-card stage-green">
+        <div class="stage-index" aria-hidden="true">4</div>
+        <div class="stage-content">
+          <p class="stage-kicker">Analysis readiness</p>
+          <h3>Validate the final data and document the decision</h3>
+          <p>
+            Quality is analysis-specific. Review continuous data, epochs,
+            event counts, spectra, ERP waveforms, topographies, or other
+            outputs that match the planned inference.
+          </p>
+          <ul>
+            <li>Confirm enough usable trials or time remain in every condition.</li>
+            <li>Check that exclusions are not systematically different across conditions or groups.</li>
+            <li>Verify that preprocessing did not introduce edge effects, distortions, or implausible topographies.</li>
+            <li>Record thresholds, rejected data, interpolated channels, uncertainty, and retention decisions.</li>
+          </ul>
+          <aside class="success-box">
+            <strong>Final validation:</strong> proceed only when signal,
+            topography, spectra, ERP measures, or other planned outputs are
+            interpretable and the remaining dataset can answer the question.
+          </aside>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="checklist-section" aria-labelledby="checklists-title">
+    <div class="section-heading">
+      <div>
+        <p class="section-kicker">Practical documents</p>
+        <h2 id="checklists-title">Use a checklist while you review</h2>
+      </div>
+    </div>
+    <p class="checklist-intro">
+      The workflow tells you where decisions occur; the checklists help you
+      record what was inspected. Complete the collection checklist at
+      acquisition and the processing checklist whenever a major preprocessing
+      decision is made.
+    </p>
+    <div class="download-grid">
+      <a class="download-card" href="/VisualQA/assets/checklists/eeg-qa-checklist-data-collection.docx">
+        <span class="download-label">During acquisition</span>
+        <strong>Data collection checklist</strong>
+        <span>Setup, recording quality, events, participant notes, and metadata.</span>
+      </a>
+      <a class="download-card" href="/VisualQA/assets/checklists/eeg-qa-checklist-data-processing.docx">
+        <span class="download-label">During processing</span>
+        <strong>Data processing checklist</strong>
+        <span>Channels, noise, artifacts, preprocessing decisions, and final validation.</span>
+      </a>
+    </div>
+  </section>
+
+  <aside class="documentation-note">
+    <h2>Document decisions, not only settings</h2>
+    <p>
+      A reproducible QC log should state what was observed, the rule used to
+      make the decision, what was changed, and what uncertainty remains.
+      Software settings alone do not explain why data were retained or removed.
+    </p>
+  </aside>
+</main>
 
 <style>
   .workflow-page { max-width: 900px; margin: 0 auto; }
-  .workflow-page h1, .workflow-page h2, .workflow-page h3 { margin-top: 1.5rem; }
-  .workflow-page ul, .workflow-page ol { padding-left: 1.2rem; }
-  .workflow-page li { margin-bottom: 0.6rem; }
+  .workflow-header { margin-bottom: 1.5rem; }
+  .workflow-kicker,
+  .section-kicker,
+  .stage-kicker,
+  .download-label {
+    margin-bottom: 0.35rem;
+    color: #4f76a1;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+  .workflow-header h1 {
+    margin-bottom: 0.65rem;
+    font-size: clamp(1.85rem, 5vw, 2.7rem);
+    line-height: 1.12;
+  }
+  .workflow-intro {
+    max-width: 740px;
+    color: #565652;
+    font-size: 1.02rem;
+    line-height: 1.7;
+  }
+  .workflow-principle {
+    margin: 1.5rem 0 2.25rem;
+    padding: 1rem 1.15rem;
+    border-left: 4px solid #d79042;
+    background: #fff4e7;
+    color: #4f3418;
+  }
+  .workflow-principle h2 { margin-bottom: 0.3rem; font-size: 1rem; }
+  .workflow-principle p { line-height: 1.6; }
+  .overview-section,
+  .stage-section,
+  .checklist-section { margin-top: 2.25rem; }
+  .section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid #deddd8;
+  }
+  .section-heading h2 { font-size: 1.35rem; line-height: 1.25; }
+  .figure-actions,
+  .stage-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .workflow-button {
+    display: inline-block;
+    padding: 0.42rem 0.7rem;
+    border: 1px solid #b9b8b2;
+    border-radius: 4px;
+    color: #292927;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .workflow-button.primary {
+    border-color: #4f76a1;
+    background: #eaf1f8;
+    color: #244f78;
+  }
+  .workflow-figure {
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid #deddd8;
+    border-radius: 8px;
+    background:
+      linear-gradient(#fafafa, #fafafa) padding-box,
+      repeating-linear-gradient(45deg, #f4f3ef, #f4f3ef 8px, #fff 8px, #fff 16px) border-box;
+    text-align: center;
+  }
+  .workflow-figure a { display: inline-block; max-width: 100%; }
+  .workflow-figure img {
+    display: block;
+    width: min(100%, 620px);
+    height: auto;
+    margin: 0 auto;
+    background: #fff;
+  }
+  .workflow-figure figcaption {
+    max-width: 650px;
+    margin: 0.8rem auto 0;
+    color: #66645f;
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+  .workflow-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1.15rem;
+    margin-top: 0.75rem;
+    color: #66645f;
+    font-size: 0.78rem;
+  }
+  .workflow-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .legend-swatch {
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 1px solid;
+    border-radius: 2px;
+  }
+  .legend-swatch.step { border-color: #686ee8; background: #e9e8ff; }
+  .legend-swatch.decision { border-color: #d47a2c; background: #fff0df; transform: rotate(45deg); }
+  .legend-swatch.action { border-color: #4f76a1; background: #eaf1f8; }
+  .legend-swatch.stop { border-color: #ba4949; background: #fceded; }
+  .stage-list { display: grid; gap: 1rem; }
+  .stage-card {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 0.9rem;
+    padding: 1.2rem;
+    border: 1px solid #deddd8;
+    border-top: 4px solid var(--stage-color);
+    border-radius: 8px;
+    background: #fff;
+  }
+  .stage-blue { --stage-color: #4f76a1; --stage-soft: #eaf1f8; --stage-dark: #244f78; }
+  .stage-teal { --stage-color: #3f8068; --stage-soft: #e7f3ee; --stage-dark: #205441; }
+  .stage-violet { --stage-color: #7866a9; --stage-soft: #f0ecf8; --stage-dark: #4f3e78; }
+  .stage-green { --stage-color: #5f8750; --stage-soft: #edf4e9; --stage-dark: #395f2d; }
+  .stage-index {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: 50%;
+    background: var(--stage-soft);
+    color: var(--stage-dark);
+    font-size: 1rem;
+    font-weight: 750;
+  }
+  .stage-content h3 { margin-bottom: 0.45rem; font-size: 1.1rem; line-height: 1.35; }
+  .stage-content > p { color: #55534e; line-height: 1.62; }
+  .stage-content ul { margin: 0.75rem 0 0.9rem; padding-left: 1.2rem; }
+  .stage-content li { margin-bottom: 0.35rem; line-height: 1.5; }
+  .decision-box,
+  .action-box,
+  .stop-box,
+  .success-box {
+    margin-top: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    border-left: 4px solid;
+    color: #1a1a1a;
+    line-height: 1.55;
+  }
+  .decision-box { border-color: #d79042; background: #fff4e7; }
+  .action-box { border-color: #4f76a1; background: #eaf1f8; }
+  .stop-box { border-color: #b84e4e; background: #fceded; }
+  .success-box { border-color: #3f8068; background: #e7f3ee; }
+  .stage-links { margin-top: 0.85rem; }
+  .stage-links a { color: #244f78; font-size: 0.82rem; font-weight: 600; }
+  .checklist-intro {
+    max-width: 720px;
+    margin-bottom: 1rem;
+    color: #565652;
+    line-height: 1.65;
+  }
+  .download-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+  .download-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1rem 1.05rem;
+    border: 1px solid #cfd9e2;
+    border-radius: 7px;
+    background: #f7fafc;
+    color: #292927;
+    text-decoration: none;
+  }
+  .download-card:hover { border-color: #4f76a1; box-shadow: 0 2px 10px rgba(36, 79, 120, 0.08); }
+  .download-card strong { color: #244f78; font-size: 1rem; }
+  .download-card span:last-child { color: #66645f; font-size: 0.82rem; line-height: 1.5; }
+  .documentation-note {
+    margin-top: 2rem;
+    padding: 1rem 1.15rem;
+    border: 1px solid #d8d4ca;
+    border-radius: 7px;
+    background: #f5f3ed;
+  }
+  .documentation-note h2 { margin-bottom: 0.35rem; font-size: 1rem; }
+  .documentation-note p { color: #55534e; line-height: 1.6; }
+
+  @media (max-width: 680px) {
+    .section-heading { align-items: start; flex-direction: column; }
+    .figure-actions,
+    .figure-actions .workflow-button { width: 100%; }
+    .figure-actions .workflow-button { text-align: center; }
+    .stage-card { grid-template-columns: 1fr; }
+    .download-grid { grid-template-columns: 1fr; }
+  }
 </style>
