@@ -1,0 +1,539 @@
+---
+layout: default
+title: MRI Quality Control and Artifact Detection Resources
+---
+
+<main class="resource-page">
+  <header class="resource-header">
+    <p class="resource-kicker">MRI Open Resources</p>
+    <h1>Quality Control and Artifact Detection</h1>
+    <p class="resource-intro">
+      A beginner-friendly reading list for assessing the quality of anatomical,
+      functional, and diffusion MRI, recognizing common artifacts, and deciding
+      what to exclude. Each entry explains what the resource adds and which part
+      is most useful to read first.
+    </p>
+  </header>
+
+  <section class="resource-search" aria-labelledby="resource-search-title">
+    <label id="resource-search-title" for="resource-search-input">Search resources</label>
+    <div class="search-control">
+      <svg class="search-icon" aria-hidden="true" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="6.5"></circle>
+        <path d="m16 16 4 4"></path>
+      </svg>
+      <input
+        id="resource-search-input"
+        type="search"
+        placeholder="Try “MRIQC”, “motion”, “diffusion”, an author, or a year"
+        autocomplete="off"
+        aria-describedby="resource-search-status"
+      >
+    </div>
+    <p id="resource-search-status" class="search-status" aria-live="polite">
+      Showing all 9 resources
+    </p>
+  </section>
+
+  <aside class="reading-path" aria-labelledby="reading-path-title">
+    <h2 id="reading-path-title">New to this topic?</h2>
+    <p>
+      Start with <a href="#provins-2023">Provins et al. (2023)</a> to learn the
+      vocabulary of MRI artifacts, then work through
+      <a href="#hagen-2026">Hagen et al. (2026)</a> as a step-by-step protocol you
+      can actually run. Read <a href="#taylor-2023">Taylor et al. (2023)</a> when
+      you want to see how much QC decisions vary between analysts, and use the
+      remaining entries when you need a specific tool.
+    </p>
+  </aside>
+
+  <section class="resource-group" aria-labelledby="group-papers-title">
+    <h2 class="group-title" id="group-papers-title">Papers and protocols</h2>
+    <div class="resource-list">
+
+      <article class="resource-card" id="provins-2023">
+        <div class="resource-meta">
+          <span class="resource-year">2023</span>
+          <span class="resource-tag recommended">Recommended first read</span>
+        </div>
+        <h3>Quality control in functional MRI studies with MRIQC and fMRIPrep</h3>
+        <p class="citation">
+          Provins, C., MacNicol, E., Seeley, S. H., Hagmann, P., &amp; Esteban, O.
+          <em>Frontiers in Neuroimaging, 1</em>, 1073734.
+        </p>
+        <div class="beginner-notes">
+          <p><strong>What it explains:</strong> A standard operating procedure for fMRI quality control, built around the visual reports produced by MRIQC and fMRIPrep. It catalogues the individual artifacts you are expected to look for and describes what each one looks like.</p>
+          <p><strong>Look at:</strong> The artifact descriptions and accompanying figures. This is the fastest way to learn the names and visual signatures of the problems the other papers assume you already recognize.</p>
+        </div>
+        <div class="resource-actions">
+          <a class="resource-button primary" href="https://www.frontiersin.org/journals/neuroimaging/articles/10.3389/fnimg.2022.1073734/full" target="_blank" rel="noopener">Free full text</a>
+          <a class="resource-button" href="https://doi.org/10.3389/fnimg.2022.1073734" target="_blank" rel="noopener">DOI</a>
+        </div>
+      </article>
+
+      <article class="resource-card" id="taylor-2023">
+        <div class="resource-meta">
+          <span class="resource-year">2023</span>
+          <span class="resource-tag recommended">Multi-team comparison</span>
+        </div>
+        <h3>Editorial: Demonstrating quality control (QC) procedures in fMRI</h3>
+        <p class="citation">
+          Taylor, P. A., Glen, D. R., Reynolds, R. C., Basavaraj, A., Moraczewski, D., &amp; Etzel, J. A.
+          <em>Frontiers in Neuroscience, 17</em>, 1205928.
+        </p>
+        <div class="beginner-notes">
+          <p><strong>What it explains:</strong> The overview of the FMRI Open QC Project, in which several independent teams ran QC on the same task-based and resting-state datasets using their own software and criteria. It is the clearest available demonstration that QC is a judgement call, not a fixed threshold.</p>
+          <p><strong>Look at:</strong> The table of software used by each team, and then the individual team papers in the Research Topic. Each one documents its full procedure; at least one team used <code>afni_proc.py</code>.</p>
+        </div>
+        <div class="resource-actions">
+          <a class="resource-button primary" href="https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2023.1205928/full" target="_blank" rel="noopener">Free full text</a>
+          <a class="resource-button" href="https://osf.io/qaesm/overview" target="_blank" rel="noopener">OSF project &amp; team procedures</a>
+          <a class="resource-button" href="https://doi.org/10.3389/fnins.2023.1205928" target="_blank" rel="noopener">DOI</a>
+        </div>
+      </article>
+
+      <article class="resource-card" id="reynolds-2024">
+        <div class="resource-meta">
+          <span class="resource-year">2024</span>
+          <span class="resource-tag">Single-subject QC reports</span>
+        </div>
+        <h3>Processing, evaluating, and understanding FMRI data with afni_proc.py</h3>
+        <p class="citation">
+          Reynolds, R. C., Glen, D. R., Chen, G., Saad, Z. S., Cox, R. W., &amp; Taylor, P. A.
+          <em>Imaging Neuroscience, 2</em>, 1–52.
+        </p>
+        <div class="beginner-notes">
+          <p><strong>What it explains:</strong> How AFNI builds a full single-subject pipeline and, more importantly for QC, how it generates the APQC HTML report: systematic images, automated warning checks, and per-subject ratings you can record as you scroll.</p>
+          <p><strong>Look at:</strong> The sections on the QC document and the automatic self-checks. Worked task-based and resting-state examples are provided, with all scripts and outputs downloadable.</p>
+        </div>
+        <p class="team-note">
+          <strong>Team note (Sam):</strong> The AFNI team has spent a lot of time developing their
+          single-subject QC reports over the past few years. Happy to demo it with
+          rest — or preferably task — data during the week. All analysis packages
+          have their QC outputs, of course, but the outputs are not identical, so
+          it could be interesting to survey how they differ and maybe why.
+        </p>
+        <div class="resource-actions">
+          <a class="resource-button primary" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11576932" target="_blank" rel="noopener">Free full text</a>
+          <a class="resource-button" href="https://arxiv.org/abs/2406.05248" target="_blank" rel="noopener">arXiv preprint</a>
+          <a class="resource-button" href="https://osf.io/gn7b5/wiki/home/" target="_blank" rel="noopener">OSF demo data</a>
+          <a class="resource-button" href="https://doi.org/10.1162/imag_a_00347" target="_blank" rel="noopener">DOI</a>
+        </div>
+      </article>
+
+      <article class="resource-card" id="hagen-2026">
+        <div class="resource-meta">
+          <span class="resource-year">2026</span>
+          <span class="resource-tag recommended">Step-by-step protocol</span>
+        </div>
+        <h3>Quality assessment and control of unprocessed anatomical, functional and diffusion MRI of the human brain using MRIQC</h3>
+        <p class="citation">
+          Hagen, M. P., Provins, C., MacNicol, E., Li, J. K., Gomez, T., Garcia, M.,
+          Seeley, S. H., Legarreta, J. H., Norgaard, M., Bissett, P. G.,
+          Poldrack, R. A., Rokem, A., &amp; Esteban, O.
+          <em>Nature Protocols</em> (2026).
+        </p>
+        <div class="beginner-notes">
+          <p><strong>What it explains:</strong> A full protocol for visually assessing T1-weighted, T2-weighted, functional, and diffusion scans using MRIQC visual reports, covering installation, dataset configuration, and screening. It also proposes checklists and a mechanism for specifying exclusion criteria <em>before</em> the data are screened, which is what keeps intra- and inter-rater variability down.</p>
+          <p><strong>Look at:</strong> The worked artifact examples, including wrap-around, head motion, and eye-spill-over (eye motion), plus the Extended Data figures.</p>
+          <p><strong>Artifacts the protocol treats as grounds for exclusion:</strong></p>
+          <ul>
+            <li>T1w images showing extreme ringing as a result of head motion (Extended Data Fig. 1)</li>
+            <li>Irrecoverable signal dropout from susceptibility distortions across regions of interest in fMRI (Extended Data Fig. 2) or dMRI</li>
+            <li>Excessive N/2 ghosting within fMRI scans (Extended Data Fig. 3)</li>
+            <li>Excessive signal leakage through slices in multiband fMRI reconstructions</li>
+          </ul>
+          <p class="note-caveat">Note that some artifacts are obvious in one visualization and subtle in another, so check more than one view before making a call.</p>
+        </div>
+        <div class="resource-actions">
+          <a class="resource-button primary" href="https://www.biorxiv.org/content/10.1101/2024.10.21.619532v1.full.pdf+html" target="_blank" rel="noopener">Free preprint PDF</a>
+          <a class="resource-button" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11526949/" target="_blank" rel="noopener">Preprint full text</a>
+          <a class="resource-button" href="https://doi.org/10.1038/s41596-026-01352-y" target="_blank" rel="noopener">Published version (DOI)</a>
+        </div>
+        <p class="access-note">The published Nature Protocols version is paywalled; the 2024 bioRxiv preprint (doi:10.1101/2024.10.21.619532) is openly available and covers the same protocol.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="resource-group" aria-labelledby="group-tools-title">
+    <h2 class="group-title" id="group-tools-title">Software and training</h2>
+    <div class="resource-list">
+
+      <article class="resource-card" id="mriqc">
+        <div class="resource-meta">
+          <span class="resource-tag">Software</span>
+          <span class="resource-tag">Unprocessed data</span>
+        </div>
+        <h3>MRIQC</h3>
+        <p class="citation">Poldrack lab / Esteban and colleagues. BIDS App.</p>
+        <div class="beginner-notes">
+          <p><strong>What it does:</strong> Runs on unprocessed anatomical, functional, and diffusion data and produces per-scan visual reports plus image quality metrics (IQMs). This is the tool the Hagen and Provins protocols are written around.</p>
+          <p><strong>Start with:</strong> The documentation's report-interpretation pages, then the rating widget for recording your assessments.</p>
+        </div>
+        <div class="resource-actions">
+          <a class="resource-button primary" href="https://mriqc.readthedocs.io/en/stable/" target="_blank" rel="noopener">Documentation</a>
+        </div>
+      </article>
+
+      <article class="resource-card" id="fmriprep">
+        <div class="resource-meta">
+          <span class="resource-tag">Software</span>
+          <span class="resource-tag">Preprocessing</span>
+        </div>
+        <h3>fMRIPrep</h3>
+        <p class="citation">NiPreps. BIDS App.</p>
+        <div class="beginner-notes">
+          <p><strong>What it does:</strong> Preprocesses functional data and emits a per-subject HTML report covering registration, susceptibility distortion correction, confound time series, and motion.</p>
+          <p><strong>Start with:</strong> The "interpreting the outputs" section of the documentation. The reports are QC artifacts in their own right, not just a log.</p>
+        </div>
+        <div class="resource-actions">
+          <a class="resource-button primary" href="https://fmriprep.org/en/stable/" target="_blank" rel="noopener">Documentation</a>
+        </div>
+      </article>
+
+      <article class="resource-card" id="afni-apqc">
+        <div class="resource-meta">
+          <span class="resource-tag">Software</span>
+          <span class="resource-tag">APQC HTML</span>
+        </div>
+        <h3>AFNI and afni_proc.py</h3>
+        <p class="citation">Scientific and Statistical Computing Core, NIMH.</p>
+        <div class="beginner-notes">
+          <p><strong>What it does:</strong> Builds a commented, fully reproducible processing script and generates the APQC HTML quality control report, with automated warnings and interactive rating.</p>
+          <p><strong>Start with:</strong> The commands and outputs accompanying Reynolds et al. (2024), which can be run as a demo.</p>
+        </div>
+        <div class="resource-actions">
+          <a class="resource-button primary" href="https://afni.nimh.nih.gov/pub/dist/doc/htmldoc/codex/fmri/2024_ReynoldsEtal.html" target="_blank" rel="noopener">Example commands</a>
+          <a class="resource-button" href="https://github.com/afni/apaper_afni_proc" target="_blank" rel="noopener">Scripts on GitHub</a>
+        </div>
+      </article>
+
+      <article class="resource-card" id="andys-brain-book">
+        <div class="resource-meta">
+          <span class="resource-tag">Tutorial</span>
+          <span class="resource-tag">Free</span>
+        </div>
+        <h3>Andy's Brain Book</h3>
+        <p class="citation">Andrew Jahn. Online course notes and video walkthroughs.</p>
+        <div class="beginner-notes">
+          <p><strong>What it covers:</strong> Hands-on tutorials for AFNI, FSL, SPM, fMRIPrep, and related tools, written for people who have never opened a neuroimaging package before.</p>
+          <p><strong>Start with:</strong> The chapter for whichever package your project uses, and follow along with the sample dataset rather than your own data.</p>
+        </div>
+        <div class="resource-actions">
+          <a class="resource-button primary" href="https://andysbrainbook.readthedocs.io/en/latest/" target="_blank" rel="noopener">Read online</a>
+        </div>
+      </article>
+
+      <article class="resource-card" id="handbook-fmri">
+        <div class="resource-meta">
+          <span class="resource-tag">Textbook</span>
+        </div>
+        <h3>Handbook of Functional MRI Data Analysis</h3>
+        <p class="citation">Poldrack, R. A., Mumford, J. A., &amp; Nichols, T. E. Cambridge University Press.</p>
+        <div class="beginner-notes">
+          <p><strong>What it covers:</strong> The standard reference for the fMRI analysis pipeline, from acquisition and preprocessing through statistical modelling.</p>
+          <p><strong>Look at:</strong> The preprocessing chapters for the physical origins of the artifacts the QC papers ask you to identify.</p>
+        </div>
+        <div class="resource-actions">
+          <a class="resource-button primary" href="https://doi.org/10.1017/CBO9780511895029" target="_blank" rel="noopener">Publisher page</a>
+        </div>
+        <p class="access-note">Not open access. Check for a library copy.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <div id="resource-no-results" class="no-results" hidden>
+    <h2>No matching resources</h2>
+    <p>Try a broader term, a modality, a tool name, an author, or a publication year.</p>
+    <button id="resource-search-reset" type="button">Clear search</button>
+  </div>
+
+  <section class="gaps" aria-labelledby="gaps-title">
+    <h2 id="gaps-title">Gaps we still want to fill</h2>
+    <ul>
+      <li>Diffusion-specific QC beyond what MRIQC covers, for example QSIPrep or eddy QC</li>
+      <li>A cross-package comparison of QC reports (MRIQC, fMRIPrep, AFNI) — see Sam's offer above</li>
+      <li>A team SOP: who performs QC, at what stage, and how exclusions get documented</li>
+      <li>An annotated artifact gallery for training new raters</li>
+    </ul>
+    <p>Add anything you have found useful, or open an issue.</p>
+  </section>
+
+  <p class="resource-footnote">
+    “Free full text” and “Free PDF” links point to openly accessible copies hosted
+    by authors, institutions, publishers, or preprint repositories. Publisher
+    availability can change.
+  </p>
+</main>
+
+<style>
+  .resource-page { max-width: 800px; margin: 0 auto; }
+  .resource-header { margin-bottom: 1.75rem; }
+  .resource-kicker {
+    margin-bottom: 0.35rem;
+    color: #4f76a1;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .resource-header h1 {
+    margin-bottom: 0.65rem;
+    font-size: clamp(1.8rem, 5vw, 2.65rem);
+    line-height: 1.12;
+  }
+  .resource-intro {
+    max-width: 680px;
+    color: #565652;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  .resource-search {
+    margin: 1.5rem 0;
+    padding: 1rem 1.15rem;
+    border: 1px solid #d7e1eb;
+    border-radius: 7px;
+    background: #f7fafc;
+  }
+  .resource-search label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #273d52;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .search-control { position: relative; }
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 0.8rem;
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: #697b8c;
+    stroke-linecap: round;
+    stroke-width: 2;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .search-control input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.72rem 0.85rem 0.72rem 2.35rem;
+    border: 1px solid #aebdca;
+    border-radius: 5px;
+    background: #fff;
+    color: #292927;
+    font: inherit;
+  }
+  .search-control input:focus {
+    border-color: #4f76a1;
+    outline: 3px solid #dce9f5;
+  }
+  .search-status {
+    margin: 0.45rem 0 0;
+    color: #68737d;
+    font-size: 0.76rem;
+  }
+  .reading-path {
+    margin: 1.5rem 0 2rem;
+    padding: 1rem 1.15rem;
+    border-left: 4px solid #4f76a1;
+    background: #eaf1f8;
+  }
+  .reading-path h2 { margin-bottom: 0.35rem; font-size: 1rem; }
+  .reading-path p { line-height: 1.6; }
+  .reading-path a { color: #244f78; }
+  .resource-group { margin-bottom: 2rem; }
+  .resource-group[hidden] { display: none; }
+  .group-title {
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid #deddd8;
+    color: #3f3e3a;
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .resource-list { display: grid; gap: 1rem; }
+  .resource-card {
+    padding: 1.15rem 1.2rem;
+    border: 1px solid #deddd8;
+    border-radius: 7px;
+    background: #fff;
+  }
+  .resource-card[hidden] { display: none; }
+  .resource-card:target {
+    border-color: #4f76a1;
+    box-shadow: 0 0 0 3px #eaf1f8;
+  }
+  .resource-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.6rem;
+  }
+  .resource-year,
+  .resource-tag {
+    display: inline-block;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    background: #f0efeb;
+    color: #55544f;
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+  .resource-tag.recommended { background: #e7f3ee; color: #25624d; }
+  .resource-card h3 {
+    margin-bottom: 0.4rem;
+    font-size: 1.08rem;
+    line-height: 1.35;
+  }
+  .citation {
+    margin-bottom: 0.85rem;
+    color: #66645f;
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+  .beginner-notes {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0.85rem 0 1rem;
+  }
+  .beginner-notes p { line-height: 1.58; }
+  .beginner-notes ul {
+    margin: 0;
+    padding-left: 1.15rem;
+  }
+  .beginner-notes li {
+    margin-bottom: 0.3rem;
+    line-height: 1.55;
+  }
+  .beginner-notes code {
+    padding: 0.05rem 0.28rem;
+    border-radius: 3px;
+    background: #f0efeb;
+    font-size: 0.88em;
+  }
+  .note-caveat { color: #66645f; font-size: 0.9rem; }
+  .team-note {
+    margin: 0 0 1rem;
+    padding: 0.7rem 0.85rem;
+    border-left: 3px solid #c8b78a;
+    background: #faf7ef;
+    color: #55544f;
+    font-size: 0.84rem;
+    line-height: 1.58;
+  }
+  .resource-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .resource-button {
+    display: inline-block;
+    padding: 0.38rem 0.65rem;
+    border: 1px solid #c8c7c2;
+    border-radius: 4px;
+    color: #292927;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .resource-button:hover { border-color: #777570; }
+  .resource-button.primary {
+    border-color: #356c58;
+    background: #e7f3ee;
+    color: #205441;
+  }
+  .access-note {
+    margin-top: 0.65rem;
+    color: #74726d;
+    font-size: 0.76rem;
+    font-style: italic;
+  }
+  .gaps {
+    margin-top: 2rem;
+    padding: 1rem 1.15rem;
+    border: 1px dashed #c8c7c2;
+    border-radius: 7px;
+    background: #fbfaf8;
+  }
+  .gaps h2 { margin-bottom: 0.5rem; font-size: 1rem; }
+  .gaps ul { margin: 0 0 0.75rem; padding-left: 1.15rem; }
+  .gaps li { margin-bottom: 0.3rem; line-height: 1.55; }
+  .gaps p { color: #66645f; font-size: 0.84rem; }
+  .resource-footnote {
+    margin-top: 1.4rem;
+    color: #74726d;
+    font-size: 0.76rem;
+    line-height: 1.5;
+  }
+  .no-results {
+    padding: 2rem 1.25rem;
+    border: 1px dashed #aebdca;
+    border-radius: 7px;
+    text-align: center;
+  }
+  .no-results h2 { margin-bottom: 0.35rem; font-size: 1.05rem; }
+  .no-results p { color: #66645f; }
+  .no-results button {
+    margin-top: 0.85rem;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid #4f76a1;
+    border-radius: 4px;
+    background: #eaf1f8;
+    color: #244f78;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  @media (max-width: 600px) {
+    .resource-card { padding: 1rem; }
+    .resource-button { flex: 1 1 auto; text-align: center; }
+  }
+</style>
+
+<script>
+  (function () {
+    var input = document.getElementById("resource-search-input");
+    var groups = Array.from(document.querySelectorAll(".resource-group"));
+    var cards = Array.from(document.querySelectorAll(".resource-card"));
+    var status = document.getElementById("resource-search-status");
+    var noResults = document.getElementById("resource-no-results");
+    var reset = document.getElementById("resource-search-reset");
+
+    function updateResults() {
+      var query = input.value.trim().toLocaleLowerCase();
+      var matches = 0;
+
+      cards.forEach(function (card) {
+        var isMatch = !query || card.textContent.toLocaleLowerCase().includes(query);
+        card.hidden = !isMatch;
+        if (isMatch) matches += 1;
+      });
+
+      groups.forEach(function (group) {
+        var visible = group.querySelectorAll(".resource-card:not([hidden])").length;
+        group.hidden = visible === 0;
+      });
+
+      noResults.hidden = matches !== 0;
+      status.textContent = query
+        ? matches + (matches === 1 ? " resource found" : " resources found")
+        : "Showing all " + cards.length + " resources";
+    }
+
+    input.addEventListener("input", updateResults);
+    reset.addEventListener("click", function () {
+      input.value = "";
+      updateResults();
+      input.focus();
+    });
+  }());
+</script>
