@@ -42,7 +42,7 @@ body:
       label: Section (where in the river)
       description: Which part of the page structure it belongs under.
       options:
-        - Equipment setup
+        - Open Resources
         - Artifacts
         - QC checks
         - Practice
