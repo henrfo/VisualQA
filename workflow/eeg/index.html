@@ -1,0 +1,47 @@
+---
+layout: default
+title: EEG Quality Control Workflow
+permalink: /workflow/eeg/
+---
+
+<section class="workflow-page">
+  <h1>EEG Quality Control Workflow</h1>
+
+  <p>
+    Where quality control fits in the EEG pipeline, and what to look for at each
+    inspection point. Raw data are inspected before any processing is run; processed
+    data are inspected again before they enter analysis.
+  </p>
+
+  <h2>Pipeline</h2>
+  <ol>
+    <li><strong>Data acquisition</strong><br>Record EEG data with careful setup, annotations, and metadata.</li>
+    <li><strong>Preprocessing</strong><br>Apply filtering, re-referencing, artifact correction, and epoching.</li>
+    <li><strong>Analysis</strong><br>Fit models, inspect outputs, and report findings.</li>
+  </ol>
+
+  <h2>Checklists</h2>
+  <p>
+    Tick items as you review each recording. Use the checklists below during the
+    relevant inspection point.
+  </p>
+
+  <h3>Raw data</h3>
+  <ul>
+    <li><a href="/VisualQA/assets/checklists/eeg-qa-checklist-data-collection.docx">Data collection checklist</a></li>
+    <li><a href="/VisualQA/assets/checklists/eeg-qa-checklist-data-processing.docx">Data processing checklist</a></li>
+  </ul>
+
+  <h3>Inspection points</h3>
+  <p>
+    Inspect the raw recording before processing begins. Revisit the relevant checklist
+    after any major preprocessing change.
+  </p>
+</section>
+
+<style>
+  .workflow-page { max-width: 900px; margin: 0 auto; }
+  .workflow-page h1, .workflow-page h2, .workflow-page h3 { margin-top: 1.5rem; }
+  .workflow-page ul, .workflow-page ol { padding-left: 1.2rem; }
+  .workflow-page li { margin-bottom: 0.6rem; }
+</style>
