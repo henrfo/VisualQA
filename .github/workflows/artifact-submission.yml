@@ -81,12 +81,27 @@ jobs:
               } catch (e) { core.warning(`could not fetch ${url}: ${e}`); }
             }
 
-            // Write the page.
-            const dir = path.join('_artifacts', modDir);
-            fs.mkdirSync(dir, { recursive: true });
-            const permalink = `/artifacts/${modDir}/${slug}/`;
+            // Write the page. Route by section so it lands where it belongs:
+            // Open Resources → open-resources/<mod>/<slug>/, everything else →
+            // the _artifacts collection (rendered with the artifact layout).
+            const isOpenRes = /open\s*resources/i.test(section);
+            let file, permalink, layoutLine;
+            if (isOpenRes) {
+              const dir = path.join('open-resources', modDir, slug);
+              fs.mkdirSync(dir, { recursive: true });
+              file = path.join(dir, 'index.html');
+              permalink = `/open-resources/${modDir}/${slug}/`;
+              layoutLine = 'layout: default';
+            } else {
+              const dir = path.join('_artifacts', modDir);
+              fs.mkdirSync(dir, { recursive: true });
+              file = path.join(dir, `${slug}.md`);
+              permalink = `/artifacts/${modDir}/${slug}/`;
+              layoutLine = null; // collection default supplies the artifact layout
+            }
             const fm = [
               '---',
+              layoutLine,
               `title: ${title}`,
               `modality: ${modality}`,
               submodality ? `submodality: ${submodality}` : null,
@@ -95,10 +110,10 @@ jobs:
               '---',
               ''
             ].filter(x => x !== null).join('\n');
-            fs.writeFileSync(path.join(dir, `${slug}.md`), fm + pageBody.trim() + '\n');
+            fs.writeFileSync(file, fm + pageBody.trim() + '\n');
 
             core.setOutput('slug', slug);
-            core.setOutput('file', `${dir}/${slug}.md`);
+            core.setOutput('file', file);
             core.setOutput('permalink', permalink);
             core.setOutput('title', title);
 
